@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="LMB_RECAP_CD" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="LMB_RECAP_CD"/>
+  <metadata changedAt="2017-11-27 11:29:49.623"/>
+  <localVariables/>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="BillingDocumentHeader" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.hba.ecc/calculationviews/BillingDocumentHeader</resourceUri>
+    </DataSource>
+    <DataSource id="BillingDocumentItem" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.hba.ecc/calculationviews/BillingDocumentItem</resourceUri>
+    </DataSource>
+    <DataSource id="T001W" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="T001W"/>
+    </DataSource>
+    <DataSource id="J_1BNFLIN" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="J_1BNFLIN"/>
+    </DataSource>
+    <DataSource id="J_1BNFDOC" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="J_1BNFDOC"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="TotalNetAmount"/>
+        <viewAttribute id="BillingDocumentDate"/>
+        <viewAttribute id="CustomerPaymentTerms"/>
+        <viewAttribute id="TaxAmount"/>
+        <viewAttribute id="DocumentReferenceID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#BillingDocumentHeader">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TotalNetAmount" source="TotalNetAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentDate" source="BillingDocumentDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CustomerPaymentTerms" source="CustomerPaymentTerms"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DocumentReferenceID" source="DocumentReferenceID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="SalesOffice"/>
+        <viewAttribute id="Plant"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#BillingDocumentItem">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesOffice" source="SalesOffice"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="WERKS"/>
+        <viewAttribute id="VLFKZ"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#T001W">
+        <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VLFKZ" source="VLFKZ"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="SalesOffice"/>
+        <viewAttribute id="VLFKZ"/>
+        <viewAttribute id="Plant"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesOffice" source="SalesOffice"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+      </input>
+      <input node="#Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="VLFKZ" source="VLFKZ"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="WERKS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+      </input>
+      <joinAttribute name="Plant"/>
+      <joinAttribute name="SAPClient"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOCNUM"/>
+        <viewAttribute id="REFKEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#J_1BNFLIN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM" source="DOCNUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFKEY" source="REFKEY"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="TotalNetAmount"/>
+        <viewAttribute id="BillingDocumentDate"/>
+        <viewAttribute id="CustomerPaymentTerms"/>
+        <viewAttribute id="TaxAmount"/>
+        <viewAttribute id="DocumentReferenceID"/>
+        <viewAttribute id="REFKEY"/>
+        <viewAttribute id="DOCNUM"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFKEY" source="REFKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM" source="DOCNUM"/>
+      </input>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TotalNetAmount" source="TotalNetAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentDate" source="BillingDocumentDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CustomerPaymentTerms" source="CustomerPaymentTerms"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DocumentReferenceID" source="DocumentReferenceID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFKEY" source="BillingDocument"/>
+      </input>
+      <joinAttribute name="REFKEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CODE">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="100"/>
+        </viewAttribute>
+        <viewAttribute id="DOCNUM"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#J_1BNFDOC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CODE" source="CODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM" source="DOCNUM"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="C1_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="TotalNetAmount"/>
+        <viewAttribute id="BillingDocumentDate"/>
+        <viewAttribute id="CustomerPaymentTerms"/>
+        <viewAttribute id="TaxAmount"/>
+        <viewAttribute id="DocumentReferenceID"/>
+        <viewAttribute id="REFKEY"/>
+        <viewAttribute id="DOCNUM"/>
+        <viewAttribute id="DOCNUM_1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TotalNetAmount" source="TotalNetAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentDate" source="BillingDocumentDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CustomerPaymentTerms" source="CustomerPaymentTerms"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DocumentReferenceID" source="DocumentReferenceID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFKEY" source="REFKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM" source="DOCNUM"/>
+      </input>
+      <input node="#Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM_1" source="DOCNUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM" source="DOCNUM"/>
+      </input>
+      <joinAttribute name="DOCNUM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SalesOffice"/>
+        <viewAttribute id="VLFKZ"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="TotalNetAmount"/>
+        <viewAttribute id="BillingDocumentDate"/>
+        <viewAttribute id="CustomerPaymentTerms"/>
+        <viewAttribute id="TaxAmount"/>
+        <viewAttribute id="DocumentReferenceID"/>
+        <viewAttribute id="REFKEY"/>
+        <viewAttribute id="DOCNUM"/>
+        <viewAttribute id="DOCNUM_1"/>
+        <viewAttribute id="BillingDocumentType_1"/>
+        <viewAttribute id="BillingDocument_1"/>
+        <viewAttribute id="SAPClient_1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TotalNetAmount" source="TotalNetAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentDate" source="BillingDocumentDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CustomerPaymentTerms" source="CustomerPaymentTerms"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DocumentReferenceID" source="DocumentReferenceID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFKEY" source="REFKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM" source="DOCNUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOCNUM_1" source="DOCNUM_1"/>
+      </input>
+      <input node="#Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesOffice" source="SalesOffice"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VLFKZ" source="VLFKZ"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType_1" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument_1" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient_1" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFKEY" source="BillingDocument"/>
+      </input>
+      <joinAttribute name="REFKEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions defaultDescription="LMB_RECAP_CD"/>
+    <attributes>
+      <attribute id="SalesOffice" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SalesOffice"/>
+        <keyMapping columnObjectName="Join_1" columnName="SalesOffice"/>
+      </attribute>
+      <attribute id="VLFKZ" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Plant category"/>
+        <keyMapping columnObjectName="Join_1" columnName="VLFKZ"/>
+      </attribute>
+      <attribute id="Plant" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Plant"/>
+        <keyMapping columnObjectName="Join_1" columnName="Plant"/>
+      </attribute>
+      <attribute id="SAPClient" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPClient"/>
+        <keyMapping columnObjectName="Join_1" columnName="SAPClient"/>
+      </attribute>
+      <attribute id="BillingDocument" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocument"/>
+        <keyMapping columnObjectName="Join_1" columnName="BillingDocument"/>
+      </attribute>
+      <attribute id="BillingDocumentType" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocumentType"/>
+        <keyMapping columnObjectName="Join_1" columnName="BillingDocumentType"/>
+      </attribute>
+      <attribute id="TotalNetAmount" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TotalNetAmount"/>
+        <keyMapping columnObjectName="Join_1" columnName="TotalNetAmount"/>
+      </attribute>
+      <attribute id="BillingDocumentDate" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocumentDate"/>
+        <keyMapping columnObjectName="Join_1" columnName="BillingDocumentDate"/>
+      </attribute>
+      <attribute id="CustomerPaymentTerms" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CustomerPaymentTerms"/>
+        <keyMapping columnObjectName="Join_1" columnName="CustomerPaymentTerms"/>
+      </attribute>
+      <attribute id="TaxAmount" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TaxAmount"/>
+        <keyMapping columnObjectName="Join_1" columnName="TaxAmount"/>
+      </attribute>
+      <attribute id="DocumentReferenceID" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DocumentReferenceID"/>
+        <keyMapping columnObjectName="Join_1" columnName="DocumentReferenceID"/>
+      </attribute>
+      <attribute id="REFKEY" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Referência ao documento de origem"/>
+        <keyMapping columnObjectName="Join_1" columnName="REFKEY"/>
+      </attribute>
+      <attribute id="DOCNUM" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Nº documento"/>
+        <keyMapping columnObjectName="Join_1" columnName="DOCNUM"/>
+      </attribute>
+      <attribute id="DOCNUM_1" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Nº documento"/>
+        <keyMapping columnObjectName="Join_1" columnName="DOCNUM_1"/>
+      </attribute>
+      <attribute id="BillingDocumentType_1" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocumentType_1"/>
+        <keyMapping columnObjectName="Join_1" columnName="BillingDocumentType_1"/>
+      </attribute>
+      <attribute id="BillingDocument_1" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocument_1"/>
+        <keyMapping columnObjectName="Join_1" columnName="BillingDocument_1"/>
+      </attribute>
+      <attribute id="SAPClient_1" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPClient_1"/>
+        <keyMapping columnObjectName="Join_1" columnName="SAPClient_1"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="321" y="120"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="177" y="486"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="390"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="553" y="390"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="294"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="486"/>
+        <rectangleSize height="57" width="141"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="109" y="390"/>
+        <rectangleSize height="82" width="121"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="244" y="390"/>
+        <rectangleSize height="64" width="141"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="244" y="294"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="321" y="198"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

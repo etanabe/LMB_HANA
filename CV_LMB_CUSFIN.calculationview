@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CV_LMB_CUSFIN" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="false" visibility="internal" calculationScenarioType="SCRIPT_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" runWithInvokerPrivileges="false" scriptParametersCaseSensitive="true">
+  <origin/>
+  <descriptions defaultDescription="CV_LMB_CUSFIN"/>
+  <defaultSchema schemaName="_SYS_BIC"/>
+  <localVariables>
+    <variable id="pLOJA" parameter="true">
+      <descriptions defaultDescription="pLOJA"/>
+      <variableProperties datatype="VARCHAR" length="10" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="pDATA_INICIO" parameter="true">
+      <descriptions defaultDescription="pDATA_INICIO"/>
+      <variableProperties datatype="VARCHAR" length="8" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="pDATA_FIM" parameter="true">
+      <descriptions defaultDescription="pDATA_FIM"/>
+      <variableProperties datatype="VARCHAR" length="8" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources/>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:SqlScriptView" id="Script_View">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute datatype="VARCHAR" id="CENTRO" length="10"/>
+        <viewAttribute datatype="VARCHAR" id="PERIODO" length="8"/>
+        <viewAttribute datatype="DECIMAL" id="VR_VENDAS" length="18" scale="2"/>
+        <viewAttribute datatype="VARCHAR" id="ANO_VIGENTE" length="4"/>
+        <viewAttribute datatype="INTEGER" id="PARCELAS"/>
+        <viewAttribute datatype="INTEGER" id="NUM_PARCELAS"/>
+        <viewAttribute datatype="VARCHAR" id="COD_PAGAMENTO" length="4"/>
+        <viewAttribute datatype="VARCHAR" id="MEIO_PAGAMENTO" length="50"/>
+        <viewAttribute datatype="DECIMAL" id="TAXA"/>
+        <viewAttribute datatype="DECIMAL" id="VR_CUSTO" length="18" scale="2"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <localVariable>#pLOJA</localVariable>
+      <localVariable>#pDATA_INICIO</localVariable>
+      <localVariable>#pDATA_FIM</localVariable>
+      <definition> 
+BEGIN 
+    CALL &quot;_SYS_BIC&quot;.&quot;lmb.fin::LMB_CST_FIN&quot; (:pLOJA,:pDATA_INICIO,:pDATA_FIM, var_out);
+ END 
+ 
+ </definition>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Script_View">
+    <descriptions/>
+    <attributes>
+      <attribute id="CENTRO" order="1">
+        <descriptions defaultDescription="Centro"/>
+        <keyMapping columnObjectName="Script_View" columnName="CENTRO"/>
+      </attribute>
+      <attribute id="PERIODO" order="2">
+        <descriptions defaultDescription="Data"/>
+        <keyMapping columnObjectName="Script_View" columnName="PERIODO"/>
+      </attribute>
+      <attribute id="ANO_VIGENTE" order="4">
+        <descriptions defaultDescription="Ano_Vigente"/>
+        <keyMapping columnObjectName="Script_View" columnName="ANO_VIGENTE"/>
+      </attribute>
+      <attribute id="COD_PAGAMENTO" order="7">
+        <descriptions defaultDescription="COD_PAGAMENTO"/>
+        <keyMapping columnObjectName="Script_View" columnName="COD_PAGAMENTO"/>
+      </attribute>
+      <attribute id="MEIO_PAGAMENTO" order="8">
+        <descriptions defaultDescription="MEIO_PAGAMENTO"/>
+        <keyMapping columnObjectName="Script_View" columnName="MEIO_PAGAMENTO"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="VR_VENDAS" order="3" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Valor_Vendas"/>
+        <measureMapping columnObjectName="Script_View" columnName="VR_VENDAS"/>
+      </measure>
+      <measure id="PARCELAS" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="PARCELAS"/>
+        <measureMapping columnObjectName="Script_View" columnName="PARCELAS"/>
+      </measure>
+      <measure id="NUM_PARCELAS" order="6" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="COD_PAGAMENTO"/>
+        <measureMapping columnObjectName="Script_View" columnName="NUM_PARCELAS"/>
+      </measure>
+      <measure id="TAXA" order="9" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TAXA"/>
+        <measureMapping columnObjectName="Script_View" columnName="TAXA"/>
+      </measure>
+      <measure id="VR_CUSTO" order="10" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="VR_CUSTO"/>
+        <measureMapping columnObjectName="Script_View" columnName="VR_CUSTO"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

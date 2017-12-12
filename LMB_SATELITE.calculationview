@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="LMB_SATELITE" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="LMB_SATELITE"/>
+  <metadata activatedAt="2017-03-21 11:16:27.0" changedAt="2017-03-21 11:25:08.688" createdAt="2017-03-21 11:25:08.688"/>
+  <localVariables/>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="_POSDW_TLOGF" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+    <DataSource id="_POSDW_TLOGF_EXT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF_EXT" alias="_POSDW_TLOGF_EXT"/>
+    </DataSource>
+    <DataSource id="_POSDW_TENDTYT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TENDTYT" alias="_POSDW_TENDTYT"/>
+    </DataSource>
+    <DataSource id="PlantName_1" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.hba.ecc/calculationviews/PlantName</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="2"/>
+            <operands value="3"/>
+          </filter>
+        </viewAttribute>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="PCH1"/>
+            <operands value="PCH1"/>
+            <operands value="PPDB"/>
+            <operands value="PTCD"/>
+            <operands value="PTCH"/>
+            <operands value="PTCS"/>
+            <operands value="PCH2"/>
+          </filter>
+        </viewAttribute>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="REFDOCQUALIFIER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REFDOCQUALIFIER" source="REFDOCQUALIFIER"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="NOMEADMCAR"/>
+        </viewAttribute>
+        <viewAttribute id="FIELDVALUE">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="false" value=""/>
+        </viewAttribute>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF_EXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDNAME" source="FIELDNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="FIELDVALUE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="BUSINESSDAYDATE"/>
+      <joinAttribute name="ROWKEY"/>
+      <joinAttribute name="TRANSINDEX"/>
+      <joinAttribute name="TRANSNUMBER"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Desc_Tender">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="PROFILETYPE">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="YR01"/>
+        </viewAttribute>
+        <viewAttribute id="SPRAS">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="P"/>
+        </viewAttribute>
+        <viewAttribute id="TENDERTYPECODE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TENDTYT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROFILETYPE" source="PROFILETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+      </input>
+      <input node="#Desc_Tender">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="TENDERTYPECODE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Desc_Plant">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="PlantName"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PlantName_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PlantName" source="PlantName"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PlantName"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      </input>
+      <input node="#Desc_Plant">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PlantName" source="PlantName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="Plant"/>
+      </input>
+      <joinAttribute name="PLANT"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions defaultDescription="LMB_SATELITE"/>
+    <attributes>
+      <attribute id="Nome_Filial" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Nome_Filial"/>
+        <keyMapping columnObjectName="Join_1" columnName="PlantName"/>
+      </attribute>
+      <attribute id="Businessdaydate" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Businessdaydate"/>
+        <keyMapping columnObjectName="Join_1" columnName="BUSINESSDAYDATE"/>
+      </attribute>
+      <attribute id="Bandeira" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bandeira"/>
+        <keyMapping columnObjectName="Join_1" columnName="MEDIAISSUERID"/>
+      </attribute>
+      <attribute id="Filial" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Filial"/>
+        <keyMapping columnObjectName="Join_1" columnName="PLANT"/>
+      </attribute>
+      <attribute id="Tipo_Pagto" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Tipo_Pagto"/>
+        <keyMapping columnObjectName="Join_1" columnName="TENDERTYPECODE"/>
+      </attribute>
+      <attribute id="Conveniada" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Conveniada"/>
+        <keyMapping columnObjectName="Join_1" columnName="FIELDVALUE"/>
+      </attribute>
+      <attribute id="Forma_Pagto" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Forma_Pagto"/>
+        <keyMapping columnObjectName="Join_1" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="TRANSNUMBER" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TRANSNUMBER"/>
+        <keyMapping columnObjectName="Join_1" columnName="TRANSNUMBER"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="Data" hidden="false" order="10" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Data"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="10">
+          <formula>format(date(&quot;Businessdaydate&quot;),'DD/MM/YYYY')</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="Valor" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Valor"/>
+        <measureMapping columnObjectName="Join_1" columnName="TENDERAMOUNT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-150" y="450"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="0" y="450"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-90" y="360"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Desc_Tender" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="60" y="360"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-30" y="270"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Desc_Plant" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="120" y="270"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="170"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

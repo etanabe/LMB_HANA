@@ -1,0 +1,2156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="2.3" id="LMB_RECAP" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="LMB_RECAP"/>
+  <metadata changedAt="2017-12-12 18:18:07.249"/>
+  <localVariables>
+    <variable id="VAR_BUSINESSDAYDATE">
+      <descriptions defaultDescription="VAR_BUSINESSDAYDATE"/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="VAR_RETAILSTOREID">
+      <descriptions defaultDescription="VAR_RETAILSTOREID"/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="VAR_BUSINESSDAYDATE_1">
+      <descriptions defaultDescription="VAR_BUSINESSDAYDATE_1"/>
+      <variableProperties datatype="CHAR" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="Interval"/>
+      </variableProperties>
+    </variable>
+    <variable id="VAR_PLANT">
+      <descriptions defaultDescription="VAR_PLANT"/>
+      <variableProperties datatype="CHAR" mandatory="true">
+        <valueDomain type="AttributeValue">
+          <attribute name="Loja"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_Store" parameter="true">
+      <descriptions defaultDescription="Loja"/>
+      <variableProperties datatype="NVARCHAR" length="4" mandatory="false" scale="0">
+        <valueDomain type="AttributeValue">
+          <attribute name="Loja"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+        <defaultRange/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="#LMB_RECAP_LOJA">
+      <targetVariable name="IP_Store" resourceUri="/lmb.fin/calculationviews/LMB_RECAP_LOJA"/>
+      <localVariable>#IP_Store</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="33"/>
+  <dataSources>
+    <DataSource id="LMB_RECAP_LOJA" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/lmb.fin/calculationviews/LMB_RECAP_LOJA</resourceUri>
+    </DataSource>
+    <DataSource id="LMB_RECAP_CD" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/lmb.fin/calculationviews/LMB_RECAP_CD</resourceUri>
+    </DataSource>
+    <DataSource id="LMB_RECAP_BNDES" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/lmb.fin/calculationviews/LMB_RECAP_BNDES</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="TURNOVER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="1_Dinheiro"/>
+        <viewAttribute id="2_Cheque"/>
+        <viewAttribute id="3_3_American_Express"/>
+        <viewAttribute id="3_4_Celebre"/>
+        <viewAttribute id="3_5_Banrisul_Credito"/>
+        <viewAttribute id="4_1_Cielo_Debito"/>
+        <viewAttribute id="4_2_Rede_Debito"/>
+        <viewAttribute id="4_3_Banrisul_Debito"/>
+        <viewAttribute id="5_1_CDC_Losango"/>
+        <viewAttribute id="7_Voucher"/>
+        <viewAttribute id="9_Retomada_Adto_GE"/>
+        <viewAttribute id="13_Adto_Clientes"/>
+        <viewAttribute id="14_Adto_GE"/>
+        <viewAttribute id="4_Cartoes_Debito"/>
+        <viewAttribute id="5_Financeira"/>
+        <viewAttribute id="6_Vale_Credito"/>
+        <viewAttribute id="12_Devolucoes_Vendas"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="6_1_Vales_Emitidos_Devolucao"/>
+        <viewAttribute id="6_2_Vales_Emitidos_Canc_Pedido"/>
+        <viewAttribute id="6_3_Vales_Baixados_Caixa"/>
+        <viewAttribute id="6_4_Vales_Baixados_Reembolso"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="6_Vale_Credito_1"/>
+        <viewAttribute id="6_Vale_Credito_2"/>
+        <viewAttribute id="1_1_Dinheiro"/>
+        <viewAttribute id="11_1_1_Vendas_Loja"/>
+        <viewAttribute id="13_1_Adto_Clientes"/>
+        <viewAttribute id="13_2_Adto_Clientes"/>
+        <viewAttribute id="SALESAMOUNT"/>
+        <viewAttribute id="RETAILTYPECODE"/>
+        <viewAttribute id="TAXTYPECODE"/>
+        <viewAttribute id="TAXAMOUNT"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="3_6_SENFF"/>
+        <viewAttribute id="4_4_Construcard"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="15_Vendas_Gift_Card"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="Cielo_Credito"/>
+        <viewAttribute id="Rede_Credito"/>
+        <viewAttribute id="TENDERNUMBER"/>
+        <viewAttribute id="12_Devolucoes_Totais_Venda"/>
+        <viewAttribute id="12_1_Devolucoes_Na_Mesma_Loja"/>
+        <viewAttribute id="12_2_Devolucoes_Em_Outras_Lojas"/>
+        <viewAttribute id="12_3_Anulacoes_Na_Mesma_Loja"/>
+        <viewAttribute id="12_4_Devolucoes_De_Outras_Lojas"/>
+        <viewAttribute id="11_2_1_1_Servicos_Loja"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#LMB_RECAP_LOJA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TURNOVER" source="TURNOVER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="1_Dinheiro" source="1_Dinheiro"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="2_Cheque" source="2_Cheque"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_3_American_Express" source="3_3_American_Express"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_4_Celebre" source="3_4_Celebre"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_5_Banrisul_Credito" source="3_5_Banrisul_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_1_Cielo_Debito" source="4_1_Cielo_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_2_Rede_Debito" source="4_2_Rede_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_3_Banrisul_Debito" source="4_3_Banrisul_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="5_1_CDC_Losango" source="5_1_CDC_Losango"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="7_Voucher" source="7_Voucher"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="9_Retomada_Adto_GE" source="9_Retomada_Adto_GE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="13_Adto_Clientes" source="13_Adto_Clientes"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="14_Adto_GE" source="14_Adto_GE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_Cartoes_Debito" source="4_Cartoes_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="5_Financeira" source="5_Financeira"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_Vale_Credito" source="6_Vale_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_Devolucoes_Vendas" source="12_Devolucoes_Vendas"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_1_Vales_Emitidos_Devolucao" source="6_1_Vales_Emitidos_Devolucao"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_2_Vales_Emitidos_Canc_Pedido" source="6_2_Vales_Emitidos_Canc_Pedido"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_3_Vales_Baixados_Caixa" source="6_3_Vales_Baixados_Caixa"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_4_Vales_Baixados_Reembolso" source="6_4_Vales_Baixados_Reembolso"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_Vale_Credito_1" source="6_Vale_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_Vale_Credito_2" source="6_Vale_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="1_1_Dinheiro" source="1_1_Dinheiro"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="11_1_1_Vendas_Loja" source="11_1_1_Vendas_Loja"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="13_1_Adto_Clientes" source="13_1_Adto_Clientes"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="13_2_Adto_Clientes" source="13_2_Adto_Clientes"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SALESAMOUNT" source="SALESAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILTYPECODE" source="RETAILTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TAXTYPECODE" source="TAXTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TAXAMOUNT" source="TAXAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_6_SENFF" source="3_6_SENFF"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_4_Construcard" source="4_4_Construcard"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="15_Vendas_Gift_Card" source="15_Vendas_Gift_Card"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Cielo_Credito" source="Cielo_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Rede_Credito" source="Rede_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERNUMBER" source="TENDERNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_Devolucoes_Totais_Venda" source="12_Devolucoes_Totais_Venda"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_1_Devolucoes_Na_Mesma_Loja" source="12_1_Devolucoes_Na_Mesma_Loja"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_2_Devolucoes_Em_Outras_Lojas" source="12_2_Devolucoes_Em_Outras_Lojas"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_3_Anulacoes_Na_Mesma_Loja" source="12_3_Anulacoes_Na_Mesma_Loja"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_4_Devolucoes_De_Outras_Lojas" source="12_4_Devolucoes_De_Outras_Lojas"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="11_2_1_1_Servicos_Loja" source="11_2_1_1_Servicos_Loja"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TotalNetAmount"/>
+        <viewAttribute id="SalesOffice"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentDate"/>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="CustomerPaymentTerms"/>
+        <viewAttribute id="VLFKZ"/>
+        <viewAttribute id="TaxAmount"/>
+        <viewAttribute id="DocumentReferenceID"/>
+        <viewAttribute id="BillingDocumentType_1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#LMB_RECAP_CD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TotalNetAmount" source="TotalNetAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesOffice" source="SalesOffice"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentDate" source="BillingDocumentDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CustomerPaymentTerms" source="CustomerPaymentTerms"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VLFKZ" source="VLFKZ"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DocumentReferenceID" source="DocumentReferenceID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType_1" source="BillingDocumentType_1"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="3_1_2_Cielo_BNDES"/>
+        <viewAttribute id="3_2_2_Rede_BNDES"/>
+        <viewAttribute id="TRANSINDEX"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#LMB_RECAP_BNDES">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_1_2_Cielo_BNDES" source="3_1_2_Cielo_BNDES"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_2_2_Rede_BNDES" source="3_2_2_Rede_BNDES"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="TURNOVER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="1_Dinheiro"/>
+        <viewAttribute id="2_Cheque"/>
+        <viewAttribute id="3_3_American_Express"/>
+        <viewAttribute id="3_4_Celebre"/>
+        <viewAttribute id="3_5_Banrisul_Credito"/>
+        <viewAttribute id="4_1_Cielo_Debito"/>
+        <viewAttribute id="4_2_Rede_Debito"/>
+        <viewAttribute id="4_3_Banrisul_Debito"/>
+        <viewAttribute id="5_1_CDC_Losango"/>
+        <viewAttribute id="7_Voucher"/>
+        <viewAttribute id="9_Retomada_Adto_GE"/>
+        <viewAttribute id="13_Adto_Clientes"/>
+        <viewAttribute id="14_Adto_GE"/>
+        <viewAttribute id="4_Cartoes_Debito"/>
+        <viewAttribute id="5_Financeira"/>
+        <viewAttribute id="6_Vale_Credito"/>
+        <viewAttribute id="12_Devolucoes_Vendas"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="6_1_Vales_Emitidos_Devolucao"/>
+        <viewAttribute id="6_2_Vales_Emitidos_Canc_Pedido"/>
+        <viewAttribute id="6_3_Vales_Baixados_Caixa"/>
+        <viewAttribute id="6_4_Vales_Baixados_Reembolso"/>
+        <viewAttribute id="TotalNetAmount"/>
+        <viewAttribute id="BillingDocument"/>
+        <viewAttribute id="BillingDocumentType"/>
+        <viewAttribute id="CustomerPaymentTerms"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="3_6_SENFF"/>
+        <viewAttribute id="4_4_Construcard"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="1_1_Dinheiro"/>
+        <viewAttribute id="VLFKZ"/>
+        <viewAttribute id="TaxAmount"/>
+        <viewAttribute id="15_Vendas_Gift_Card"/>
+        <viewAttribute id="11_1_1_Vendas_Loja"/>
+        <viewAttribute id="3_1_2_Cielo_BNDES"/>
+        <viewAttribute id="3_2_2_Rede_BNDES"/>
+        <viewAttribute id="Cielo_Credito"/>
+        <viewAttribute id="Rede_Credito"/>
+        <viewAttribute id="DocumentReferenceID"/>
+        <viewAttribute id="BillingDocumentType_1"/>
+        <viewAttribute id="TENDERNUMBER"/>
+        <viewAttribute id="12_Devolucoes_Totais_Venda"/>
+        <viewAttribute id="12_1_Devolucoes_Na_Mesma_Loja"/>
+        <viewAttribute id="12_2_Devolucoes_Em_Outras_Lojas"/>
+        <viewAttribute id="12_3_Anulacoes_Na_Mesma_Loja"/>
+        <viewAttribute id="12_4_Devolucoes_De_Outras_Lojas"/>
+        <viewAttribute id="11_2_1_1_Servicos_Loja"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TURNOVER" source="TURNOVER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="1_Dinheiro" source="1_Dinheiro"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="2_Cheque" source="2_Cheque"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_3_American_Express" source="3_3_American_Express"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_4_Celebre" source="3_4_Celebre"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_5_Banrisul_Credito" source="3_5_Banrisul_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_1_Cielo_Debito" source="4_1_Cielo_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_2_Rede_Debito" source="4_2_Rede_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_3_Banrisul_Debito" source="4_3_Banrisul_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="5_1_CDC_Losango" source="5_1_CDC_Losango"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="7_Voucher" source="7_Voucher"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="9_Retomada_Adto_GE" source="9_Retomada_Adto_GE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="13_Adto_Clientes" source="13_Adto_Clientes"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="14_Adto_GE" source="14_Adto_GE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_Cartoes_Debito" source="4_Cartoes_Debito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="5_Financeira" source="5_Financeira"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_Vale_Credito" source="6_Vale_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_Devolucoes_Vendas" source="12_Devolucoes_Vendas"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_1_Vales_Emitidos_Devolucao" source="6_1_Vales_Emitidos_Devolucao"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_2_Vales_Emitidos_Canc_Pedido" source="6_2_Vales_Emitidos_Canc_Pedido"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_3_Vales_Baixados_Caixa" source="6_3_Vales_Baixados_Caixa"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="6_4_Vales_Baixados_Reembolso" source="6_4_Vales_Baixados_Reembolso"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TotalNetAmount" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BillingDocument" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BillingDocumentType" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CustomerPaymentTerms" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_6_SENFF" source="3_6_SENFF"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="4_4_Construcard" source="4_4_Construcard"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="1_1_Dinheiro" source="1_1_Dinheiro"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="VLFKZ" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TaxAmount" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="15_Vendas_Gift_Card" source="15_Vendas_Gift_Card"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="11_1_1_Vendas_Loja" source="11_1_1_Vendas_Loja"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_1_2_Cielo_BNDES" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_2_2_Rede_BNDES" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Cielo_Credito" source="Cielo_Credito"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Rede_Credito" source="Rede_Credito"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DocumentReferenceID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BillingDocumentType_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERNUMBER" source="TENDERNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_Devolucoes_Totais_Venda" source="12_Devolucoes_Totais_Venda"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_1_Devolucoes_Na_Mesma_Loja" source="12_1_Devolucoes_Na_Mesma_Loja"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_2_Devolucoes_Em_Outras_Lojas" source="12_2_Devolucoes_Em_Outras_Lojas"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_3_Anulacoes_Na_Mesma_Loja" source="12_3_Anulacoes_Na_Mesma_Loja"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="12_4_Devolucoes_De_Outras_Lojas" source="12_4_Devolucoes_De_Outras_Lojas"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="11_2_1_1_Servicos_Loja" source="11_2_1_1_Servicos_Loja"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BillingDocumentDate"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RECORDQUALIFIER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENDERAMOUNT" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENDERTYPECODE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TRANSINDEX" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TRANSNUMBER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TRANSTYPECODE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TURNOVER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="WORKSTATIONID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="1_Dinheiro" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="2_Cheque" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_3_American_Express" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_4_Celebre" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_5_Banrisul_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_1_Cielo_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_2_Rede_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_3_Banrisul_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="5_1_CDC_Losango" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="7_Voucher" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="9_Retomada_Adto_GE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="13_Adto_Clientes" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="14_Adto_GE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_Cartoes_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="5_Financeira" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_Vale_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_Devolucoes_Vendas" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="SAPClient"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_1_Vales_Emitidos_Devolucao" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_2_Vales_Emitidos_Canc_Pedido" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_3_Vales_Baixados_Caixa" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_4_Vales_Baixados_Reembolso" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TotalNetAmount" source="TotalNetAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocument" source="BillingDocument"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType" source="BillingDocumentType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CustomerPaymentTerms" source="CustomerPaymentTerms"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DATASTATUS" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="SalesOffice"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PAYMENTCARD" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIELDVALUE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_6_SENFF" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_4_Construcard" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MEDIAISSUERID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="1_1_Dinheiro" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VLFKZ" source="VLFKZ"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="15_Vendas_Gift_Card" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="11_1_1_Vendas_Loja" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_1_2_Cielo_BNDES" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_2_2_Rede_BNDES" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="Cielo_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="Rede_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DocumentReferenceID" source="DocumentReferenceID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BillingDocumentType_1" source="BillingDocumentType_1"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENDERNUMBER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_Devolucoes_Totais_Venda" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_1_Devolucoes_Na_Mesma_Loja" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_2_Devolucoes_Em_Outras_Lojas" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_3_Anulacoes_Na_Mesma_Loja" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_4_Devolucoes_De_Outras_Lojas" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="11_2_1_1_Servicos_Loja" null="true" value=""/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="#Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RECORDQUALIFIER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENDERAMOUNT" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENDERTYPECODE" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TRANSTYPECODE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TURNOVER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="WORKSTATIONID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="1_Dinheiro" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="2_Cheque" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_3_American_Express" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_4_Celebre" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_5_Banrisul_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_1_Cielo_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_2_Rede_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_3_Banrisul_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="5_1_CDC_Losango" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="7_Voucher" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="9_Retomada_Adto_GE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="13_Adto_Clientes" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="14_Adto_GE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_Cartoes_Debito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="5_Financeira" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_Vale_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_Devolucoes_Vendas" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_1_Vales_Emitidos_Devolucao" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_2_Vales_Emitidos_Canc_Pedido" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_3_Vales_Baixados_Caixa" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="6_4_Vales_Baixados_Reembolso" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TotalNetAmount" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BillingDocument" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BillingDocumentType" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CustomerPaymentTerms" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DATASTATUS" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PAYMENTCARD" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FIELDVALUE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="3_6_SENFF" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="4_4_Construcard" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MEDIAISSUERID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="1_1_Dinheiro" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="VLFKZ" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TaxAmount" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="15_Vendas_Gift_Card" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="11_1_1_Vendas_Loja" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_1_2_Cielo_BNDES" source="3_1_2_Cielo_BNDES"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="3_2_2_Rede_BNDES" source="3_2_2_Rede_BNDES"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="Cielo_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="Rede_Credito" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DocumentReferenceID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BillingDocumentType_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TENDERNUMBER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_Devolucoes_Totais_Venda" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_1_Devolucoes_Na_Mesma_Loja" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_2_Devolucoes_Em_Outras_Lojas" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_3_Anulacoes_Na_Mesma_Loja" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="12_4_Devolucoes_De_Outras_Lojas" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="11_2_1_1_Servicos_Loja" null="true" value=""/>
+      </input>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Union_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="RECORDQUALIFIER" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RECORDQUALIFIER"/>
+        <keyMapping columnObjectName="Union_1" columnName="RECORDQUALIFIER"/>
+      </attribute>
+      <attribute id="TENDERTYPECODE" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TENDERTYPECODE"/>
+        <keyMapping columnObjectName="Union_1" columnName="TENDERTYPECODE"/>
+      </attribute>
+      <attribute id="TRANSINDEX" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TRANSINDEX"/>
+        <keyMapping columnObjectName="Union_1" columnName="TRANSINDEX"/>
+      </attribute>
+      <attribute id="TRANSNUMBER" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TRANSNUMBER"/>
+        <keyMapping columnObjectName="Union_1" columnName="TRANSNUMBER"/>
+      </attribute>
+      <attribute id="TRANSTYPECODE" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TRANSTYPECODE"/>
+        <keyMapping columnObjectName="Union_1" columnName="TRANSTYPECODE"/>
+      </attribute>
+      <attribute id="WORKSTATIONID" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="WORKSTATIONID"/>
+        <keyMapping columnObjectName="Union_1" columnName="WORKSTATIONID"/>
+      </attribute>
+      <attribute id="MANDT" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Union_1" columnName="MANDT"/>
+      </attribute>
+      <attribute id="BillingDocument" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocument"/>
+        <keyMapping columnObjectName="Union_1" columnName="BillingDocument"/>
+      </attribute>
+      <attribute id="BillingDocumentType" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocumentType"/>
+        <keyMapping columnObjectName="Union_1" columnName="BillingDocumentType"/>
+      </attribute>
+      <attribute id="CustomerPaymentTerms" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CustomerPaymentTerms"/>
+        <keyMapping columnObjectName="Union_1" columnName="CustomerPaymentTerms"/>
+      </attribute>
+      <attribute id="DATASTATUS" order="77" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DATASTATUS"/>
+        <keyMapping columnObjectName="Union_1" columnName="DATASTATUS"/>
+      </attribute>
+      <attribute id="Loja" order="78" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Loja"/>
+        <keyMapping columnObjectName="Union_1" columnName="PLANT"/>
+      </attribute>
+      <attribute id="Cod_Bandeira" order="79" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cod_Bandeira"/>
+        <keyMapping columnObjectName="Union_1" columnName="PAYMENTCARD"/>
+      </attribute>
+      <attribute id="Cod_Adm" order="80" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cod_Adm"/>
+        <keyMapping columnObjectName="Union_1" columnName="FIELDVALUE"/>
+      </attribute>
+      <attribute id="Bandeira" order="81" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bandeira"/>
+        <keyMapping columnObjectName="Union_1" columnName="MEDIAISSUERID"/>
+      </attribute>
+      <attribute id="VLFKZ" order="83" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Plant category"/>
+        <keyMapping columnObjectName="Union_1" columnName="VLFKZ"/>
+      </attribute>
+      <attribute id="BUSINESSDAYDATE" hidden="true" order="87" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BUSINESSDAYDATE"/>
+        <keyMapping columnObjectName="Union_1" columnName="BUSINESSDAYDATE"/>
+      </attribute>
+      <attribute id="DocumentReferenceID" order="95" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Document Reference ID"/>
+        <keyMapping columnObjectName="Union_1" columnName="DocumentReferenceID"/>
+      </attribute>
+      <attribute id="BillingDocumentType_1" order="104" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BillingDocumentType_1"/>
+        <keyMapping columnObjectName="Union_1" columnName="BillingDocumentType_1"/>
+      </attribute>
+      <attribute id="TENDERNUMBER" order="105" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TENDERNUMBER"/>
+        <keyMapping columnObjectName="Union_1" columnName="TENDERNUMBER"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="Data" hidden="false" order="1" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Data"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;BUSINESSDAYDATE&quot;</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="TENDERAMOUNT" order="18" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TENDERAMOUNT"/>
+        <measureMapping columnObjectName="Union_1" columnName="TENDERAMOUNT"/>
+      </measure>
+      <measure id="TURNOVER" order="23" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TURNOVER"/>
+        <measureMapping columnObjectName="Union_1" columnName="TURNOVER"/>
+      </measure>
+      <measure id="1_Dinheiro" order="25" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="1_Dinheiro"/>
+        <measureMapping columnObjectName="Union_1" columnName="1_Dinheiro"/>
+      </measure>
+      <measure id="2_Cheque" order="26" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="2_Cheque"/>
+        <measureMapping columnObjectName="Union_1" columnName="2_Cheque"/>
+      </measure>
+      <measure id="3_3_American_Express" order="27" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="3_3_American_Express"/>
+        <measureMapping columnObjectName="Union_1" columnName="3_3_American_Express"/>
+      </measure>
+      <measure id="3_4_Celebre" order="28" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="3_4_Celebre"/>
+        <measureMapping columnObjectName="Union_1" columnName="3_4_Celebre"/>
+      </measure>
+      <measure id="3_5_Banrisul_Credito" order="29" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="3_5_Banrisul_Credito"/>
+        <measureMapping columnObjectName="Union_1" columnName="3_5_Banrisul_Credito"/>
+      </measure>
+      <measure id="3_6_SENFF" order="30" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="3_6_SENFF"/>
+        <measureMapping columnObjectName="Union_1" columnName="3_6_SENFF"/>
+      </measure>
+      <measure id="4_Cartoes_Debito" order="31" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="4_Cartoes_Debito"/>
+        <measureMapping columnObjectName="Union_1" columnName="4_Cartoes_Debito"/>
+      </measure>
+      <measure id="4_1_Cielo_Debito" order="32" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="4_1_Cielo_Debito"/>
+        <measureMapping columnObjectName="Union_1" columnName="4_1_Cielo_Debito"/>
+      </measure>
+      <measure id="4_2_Rede_Debito" order="33" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="4_2_Rede_Debito"/>
+        <measureMapping columnObjectName="Union_1" columnName="4_2_Rede_Debito"/>
+      </measure>
+      <measure id="4_3_Banrisul_Debito" order="34" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="4_3_Banrisul_Debito"/>
+        <measureMapping columnObjectName="Union_1" columnName="4_3_Banrisul_Debito"/>
+      </measure>
+      <measure id="4_4_Construcard" order="35" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="4_4_Construcard"/>
+        <measureMapping columnObjectName="Union_1" columnName="4_4_Construcard"/>
+      </measure>
+      <measure id="5_Financeira" order="36" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="5_Financeira"/>
+        <measureMapping columnObjectName="Union_1" columnName="5_Financeira"/>
+      </measure>
+      <measure id="5_1_CDC_Losango" order="37" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="5_1_CDC_Losango"/>
+        <measureMapping columnObjectName="Union_1" columnName="5_1_CDC_Losango"/>
+      </measure>
+      <measure id="6_Vale_Credito" order="38" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="6_Vale_Credito"/>
+        <measureMapping columnObjectName="Union_1" columnName="6_Vale_Credito"/>
+      </measure>
+      <measure id="6_1_Vales_Emitidos_Devolucao" order="39" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="6_1_Vales_Emitidos_Devolucao"/>
+        <measureMapping columnObjectName="Union_1" columnName="6_1_Vales_Emitidos_Devolucao"/>
+      </measure>
+      <measure id="6_2_Vales_Emitidos_Canc_Pedido" order="40" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="6_2_Vales_Emitidos_Canc_Pedido"/>
+        <measureMapping columnObjectName="Union_1" columnName="6_2_Vales_Emitidos_Canc_Pedido"/>
+      </measure>
+      <measure id="6_3_Vales_Baixados_Caixa" order="41" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="6_3_Vales_Baixados_Caixa"/>
+        <measureMapping columnObjectName="Union_1" columnName="6_3_Vales_Baixados_Caixa"/>
+      </measure>
+      <measure id="6_4_Vales_Baixados_Reembolso" order="42" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="6_4_Vales_Baixados_Reembolso"/>
+        <measureMapping columnObjectName="Union_1" columnName="6_4_Vales_Baixados_Reembolso"/>
+      </measure>
+      <measure id="7_Voucher" order="43" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="7_Voucher"/>
+        <measureMapping columnObjectName="Union_1" columnName="7_Voucher"/>
+      </measure>
+      <measure id="9_Retomada_Adto_GE" order="44" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="9_Retomada_Adto_GE"/>
+        <measureMapping columnObjectName="Union_1" columnName="9_Retomada_Adto_GE"/>
+      </measure>
+      <measure id="13_Adto_Clientes" order="45" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="13_Adto_Clientes"/>
+        <measureMapping columnObjectName="Union_1" columnName="13_Adto_Clientes"/>
+      </measure>
+      <measure id="14_Adto_GE" order="46" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="14_Adto_GE"/>
+        <measureMapping columnObjectName="Union_1" columnName="14_Adto_GE"/>
+      </measure>
+      <measure id="12_Devolucoes_Vendas" order="47" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="12_Devolucoes_Vendas"/>
+        <measureMapping columnObjectName="Union_1" columnName="12_Devolucoes_Vendas"/>
+      </measure>
+      <measure id="TotalNetAmount" order="49" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TotalNetAmount"/>
+        <measureMapping columnObjectName="Union_1" columnName="TotalNetAmount"/>
+      </measure>
+      <measure id="1_1_Dinheiro" order="82" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="1_1_Dinheiro"/>
+        <measureMapping columnObjectName="Union_1" columnName="1_1_Dinheiro"/>
+      </measure>
+      <measure id="TaxAmount" order="84" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Tax Amount"/>
+        <measureMapping columnObjectName="Union_1" columnName="TaxAmount"/>
+      </measure>
+      <measure id="15_Vendas_Gift_Card" order="85" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="15_Vendas_Gift_Card"/>
+        <measureMapping columnObjectName="Union_1" columnName="15_Vendas_Gift_Card"/>
+      </measure>
+      <measure id="11_1_1_Vendas_Loja" order="86" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="11_1_1_Vendas_Loja"/>
+        <measureMapping columnObjectName="Union_1" columnName="11_1_1_Vendas_Loja"/>
+      </measure>
+      <measure id="3_1_2_Cielo_BNDES" order="88" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="3_1_2_Cielo_BNDES"/>
+        <measureMapping columnObjectName="Union_1" columnName="3_1_2_Cielo_BNDES"/>
+      </measure>
+      <measure id="3_2_2_Rede_BNDES" order="89" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="3_2_2_Rede_BNDES"/>
+        <measureMapping columnObjectName="Union_1" columnName="3_2_2_Rede_BNDES"/>
+      </measure>
+      <measure id="Cielo_Credito" order="90" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Cielo_Credito"/>
+        <measureMapping columnObjectName="Union_1" columnName="Cielo_Credito"/>
+      </measure>
+      <measure id="Rede_Credito" order="91" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Rede_Credito"/>
+        <measureMapping columnObjectName="Union_1" columnName="Rede_Credito"/>
+      </measure>
+      <measure id="12_Devolucoes_Totais_Venda" order="106" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="12_Devolucoes_Totais_Venda"/>
+        <measureMapping columnObjectName="Union_1" columnName="12_Devolucoes_Totais_Venda"/>
+      </measure>
+      <measure id="12_1_Devolucoes_Na_Mesma_Loja" order="107" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="12_1_Devolucoes_Na_Mesma_Loja"/>
+        <measureMapping columnObjectName="Union_1" columnName="12_1_Devolucoes_Na_Mesma_Loja"/>
+      </measure>
+      <measure id="12_2_Devolucoes_Em_Outras_Lojas" order="108" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="12_2_Devolucoes_Em_Outras_Lojas"/>
+        <measureMapping columnObjectName="Union_1" columnName="12_2_Devolucoes_Em_Outras_Lojas"/>
+      </measure>
+      <measure id="12_3_Anulacoes_Na_Mesma_Loja" order="109" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="12_3_Anulacoes_Na_Mesma_Loja"/>
+        <measureMapping columnObjectName="Union_1" columnName="12_3_Anulacoes_Na_Mesma_Loja"/>
+      </measure>
+      <measure id="12_4_Devolucoes_De_Outras_Lojas" order="110" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="12_4_Devolucoes_De_Outras_Lojas"/>
+        <measureMapping columnObjectName="Union_1" columnName="12_4_Devolucoes_De_Outras_Lojas"/>
+      </measure>
+      <measure id="11_2_1_1_Servicos_Loja" order="117" aggregationType="sum" measureType="simple">
+        <descriptions/>
+        <measureMapping columnObjectName="Union_1" columnName="11_2_1_1_Servicos_Loja"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures>
+      <measure id="3_Cartoes_Credito" hidden="false" order="2" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="3_Cartoes_Credito"/>
+        <formula>&quot;3_1_Cielo&quot;+&quot;3_2_Rede&quot;+&quot;3_3_American_Express&quot;+&quot;3_4_Celebre&quot;+&quot;3_5_Banrisul_Credito&quot;+&quot;3_6_SENFF&quot;</formula>
+      </measure>
+      <measure id="3_1_Cielo" hidden="false" order="3" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="3_1_Cielo"/>
+        <formula>&quot;3_1_1_Cielo_Credito&quot;+&quot;3_1_2_Cielo_BNDES&quot;</formula>
+      </measure>
+      <measure id="3_1_1_Cielo_Credito" hidden="false" order="4" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="3_1_1_Cielo_Credito"/>
+        <formula>&quot;Cielo_Credito&quot;-&quot;3_1_2_Cielo_BNDES&quot;</formula>
+      </measure>
+      <measure id="3_2_Rede" hidden="false" order="5" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="3_2_Rede"/>
+        <formula>&quot;3_2_1_Rede_Credito&quot;+&quot;3_2_2_Rede_BNDES&quot;</formula>
+      </measure>
+      <measure id="3_2_1_Rede_Credito" hidden="false" order="6" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="3_2_1_Rede_Credito"/>
+        <formula>&quot;Rede_Credito&quot;-&quot;3_2_2_Rede_BNDES&quot;</formula>
+      </measure>
+      <measure id="8_Retomada_Adto" hidden="false" order="7" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="8_Retomada_Adto"/>
+        <formula>&quot;8_1_Retomada_Adto_Loja&quot;+&quot;8_2_Retomada_Adto_CD&quot;</formula>
+      </measure>
+      <measure id="8_1_Retomada_Adto_Loja" hidden="false" order="8" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="8_1_Retomada_Adto_Loja"/>
+        <formula>&quot;8_1_1_Retomada_Adto_Loja&quot;+&quot;8_1_2_Retomada_Adto_Loja_Tax&quot;-(&quot;8_1_3_Retomada_Adto_Loja_Estorno&quot;+&quot;8_1_4_Retomada_Adto_Loja_Tax_Estorno&quot;)</formula>
+      </measure>
+      <measure id="8_2_Retomada_Adto_CD" hidden="false" order="9" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="8_2_Retomada_Adto_CD"/>
+        <formula>&quot;8_2_1_Retomada_Adto_CD&quot;+&quot;8_2_2_Retomada_Adto_CD_Tax&quot;-(&quot;8_2_3_Retomada_Adto_CD_Estorno&quot;+&quot;8_2_4_Retomada_Adto_CD_Tax_Estorno&quot;)</formula>
+      </measure>
+      <measure id="8_3_Ret_Adto_Loja_Servicos" hidden="false" order="10" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="8_3_Ret_Adto_Loja_Servicos"/>
+        <formula>&quot;8_3_1_Ret_Adto_Loja_Servicos&quot;+&quot;8_3_2_Ret_Adto_Loja_Tax_Servicos&quot;-(&quot;8_3_3_Ret_Adto_Loja_Estorno_Servicos&quot;+&quot;8_3_4_Ret_Adto_Loja_Tax_Estorno_Servicos&quot;)</formula>
+      </measure>
+      <measure id="8_4_Ret_Adto_CD_Servicos" hidden="false" order="11" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="8_2_Retomada_Adto_CD"/>
+        <formula>&quot;8_4_1_Ret_Adto_CD_Servicos&quot;+&quot;8_4_2_Ret_Adto_CD_Tax_Servicos&quot;-(&quot;8_4_3_Ret_Adto_CD_Estorno_Servicos&quot;+&quot;8_4_4_Ret_Adto_CD_Tax_Estorno_Servicos&quot;)</formula>
+      </measure>
+      <measure id="10_Venda_Faturada" hidden="false" order="12" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_Venda_Faturada"/>
+        <formula>(&quot;10_1_Venda_Faturada_CD&quot;+&quot;10_2_Venda_Faturada_Loja&quot;)-(&quot;10_3_Dev_Venda_Faturada_Loja&quot;+&quot;10_4_Dev_Venda_Faturada_CD&quot;)</formula>
+      </measure>
+      <measure id="10_1_Venda_Faturada_CD" hidden="false" order="13" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_1_Venda_Faturada_CD"/>
+        <formula>(&quot;10_1_1_Venda_Faturada_CD&quot;+&quot;10_1_2_Venda_Faturada_Impostos_CD&quot;)-(&quot;10_1_1_1_Estorno_Venda_Faturada_CD&quot;+&quot;10_1_2_1_Estorno_Venda_Faturada_Impostos_CD&quot;)</formula>
+      </measure>
+      <measure id="10_2_Venda_Faturada_Loja" hidden="false" order="14" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_2_Venda_Faturada_Loja"/>
+        <formula>(&quot;10_2_1_Venda_Faturada_Loja&quot;+&quot;10_2_2_Venda_Faturada_Impostos_Loja&quot;)-(&quot;10_2_1_1_Estorno_Venda_Faturada_Loja&quot;+&quot;10_2_2_2_Estorno_Venda_Faturada_Impostos_Loja&quot;)</formula>
+      </measure>
+      <measure id="10_3_Dev_Venda_Faturada_Loja" hidden="false" order="15" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_3_Dev_Venda_Faturada_Loja"/>
+        <formula>(&quot;10_3_1_Dev_Venda_Fat_Loja&quot;+&quot;10_3_1_Dev_Venda_Fat_Loja_Tax&quot;)-(&quot;10_3_2_Estorno_Dev_Venda_Fat_Loja&quot;+&quot;10_3_2_Estorno_Dev_Venda_Fat_Loja_Tax&quot;)</formula>
+      </measure>
+      <measure id="10_4_Dev_Venda_Faturada_CD" hidden="false" order="16" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_4_Dev_Venda_Faturada_CD"/>
+        <formula>(&quot;10_4_1_Dev_Venda_Fat_CD&quot;+&quot;10_4_1_Dev_Venda_Fat_CD_Tax&quot;)-(&quot;10_4_2_Estorno_Dev_Venda_Fat_CD&quot;+&quot;10_4_2_Estorno_Dev_Venda_Fat_CD_Tax&quot;)</formula>
+      </measure>
+      <measure id="11_1_Mercadorias" hidden="false" order="92" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_1_Mercadorias"/>
+        <formula>&quot;11_1_Vendas_Loja&quot;+&quot;11_2_Vendas_CD&quot;</formula>
+      </measure>
+      <measure id="11_1_Vendas_Loja" hidden="false" order="93" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_1_Vendas_loja"/>
+        <formula>&quot;11_1_1_Vendas_Loja&quot;+&quot;8_1_Retomada_Adto_Loja&quot;+&quot;10_2_Venda_Faturada_Loja&quot;</formula>
+      </measure>
+      <measure id="11_2_Vendas_CD" hidden="false" order="94" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_2_Vendas_CD"/>
+        <formula>&quot;8_2_Retomada_Adto_CD&quot;+&quot;10_1_Venda_Faturada_CD&quot;</formula>
+      </measure>
+      <measure id="11_2_Servicos" hidden="false" order="111" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_2_Servicos"/>
+        <formula>&quot;11_2_1_Servicos_Loja&quot;+&quot;11_2_2_Servicos_CD&quot;</formula>
+      </measure>
+      <measure id="11_2_1_Servicos_Loja" hidden="false" order="112" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_1_Vendas_loja"/>
+        <formula>&quot;11_2_1_1_Servicos_Loja&quot;+&quot;8_3_Ret_Adto_Loja_Servicos&quot;+&quot;10_6_Venda_Fat_Loja_Servicos&quot;</formula>
+      </measure>
+      <measure id="11_2_2_Servicos_CD" hidden="false" order="113" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_2_Vendas_CD"/>
+        <formula>&quot;8_4_Ret_Adto_CD_Servicos&quot;+&quot;10_7_Venda_Fat_CD_Servicos&quot;</formula>
+      </measure>
+      <measure id="A_Total_Meios_de_Pagamento" hidden="false" order="114" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="A_Total_Meios_de_Pagamento"/>
+        <formula>&quot;1_Dinheiro&quot;+&quot;2_Cheque&quot;+&quot;3_Cartoes_Credito&quot;+&quot;4_Cartoes_Debito&quot;+&quot;5_Financeira&quot;+&quot;6_Vale_Credito&quot;+&quot;7_Voucher&quot;+&quot;8_Retomada_Adto&quot;+&quot;9_Retomada_Adto_GE&quot;+&quot;10_Venda_Faturada&quot;</formula>
+      </measure>
+      <measure id="B_Total_Transacoes" hidden="false" order="115" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="B_Total_Transações"/>
+        <formula>&quot;11_1_Mercadorias&quot;+&quot;12_Devolucoes_Totais_Venda&quot;+&quot;13_Adto_Clientes&quot;+&quot;14_Adto_GE&quot;+&quot;15_Vendas_Gift_Card&quot;</formula>
+      </measure>
+      <measure id="C_Diferenca_Caixa" hidden="false" order="116" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="C_Diferenca_Caixa A-B"/>
+        <formula>(&quot;A_Total_Meios_de_Pagamento&quot;)-(&quot;B_Total_Transacoes&quot;)-(&quot;12_4_Devolucoes_De_Outras_Lojas&quot;)</formula>
+      </measure>
+      <measure id="10_6_Venda_Fat_Loja_Servicos" hidden="false" order="118" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_2_Venda_Faturada_Loja"/>
+        <formula>(&quot;10_6_1_Venda_Fat_Loja_Servicos&quot;+&quot;10_6_2_Venda_Fat_Tax_Loja_Servicos&quot;)-(&quot;10_6_1_1_Estorno_Venda_Fat_Loja_Servicos&quot;+&quot;10_6_2_2_Estorno_Venda_Fat_Tax_Loja_Servicos&quot;)</formula>
+      </measure>
+      <measure id="10_7_Venda_Fat_CD_Servicos" hidden="false" order="123" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="10_1_Venda_Faturada_CD"/>
+        <formula>(&quot;10_7_1_Venda_Fat_CD_Servicos&quot;+&quot;10_7_2_Venda_Fat_Tax_CD_Servicos&quot;)-(&quot;10_7_1_1_Estorno_Venda_Fat_CD_Servicos&quot;+&quot;10_7_2_1_Estorno_Venda_Fat_Tax_CD_Servicos&quot;)</formula>
+      </measure>
+      <measure id="11_Vendas" hidden="false" order="130" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions defaultDescription="11_1_Mercadorias"/>
+        <formula>&quot;11_1_Mercadorias&quot;+&quot;11_2_Servicos&quot;</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures>
+      <measure id="8_1_1_Retomada_Adto_Loja" hidden="false" order="53" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_1_1_Retomada_Adto_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_1_2_Retomada_Adto_Loja_Tax" hidden="false" order="54" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_1_2_Retomada_Adto_Loja_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_1_3_Retomada_Adto_Loja_Estorno" hidden="false" order="55" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_1_1_Retomada_Adto_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_1_4_Retomada_Adto_Loja_Tax_Estorno" hidden="false" order="56" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_1_2_Retomada_Adto_Loja_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_2_1_Retomada_Adto_CD" hidden="false" order="57" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_2_1_Retomada_Adto_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_2_2_Retomada_Adto_CD_Tax" hidden="false" order="58" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_2_2_Retomada_Adto_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_2_3_Retomada_Adto_CD_Estorno" hidden="false" order="59" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_2_1_Retomada_Adto_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_2_4_Retomada_Adto_CD_Tax_Estorno" hidden="false" order="60" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_2_2_Retomada_Adto_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_3_1_Ret_Adto_Loja_Servicos" hidden="false" order="61" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_1_1_Retomada_Adto_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_3_2_Ret_Adto_Loja_Tax_Servicos" hidden="false" order="62" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_1_2_Retomada_Adto_Loja_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_3_3_Ret_Adto_Loja_Estorno_Servicos" hidden="false" order="63" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_1_1_Retomada_Adto_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_3_4_Ret_Adto_Loja_Tax_Estorno_Servicos" hidden="false" order="64" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_1_2_Retomada_Adto_Loja_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_4_1_Ret_Adto_CD_Servicos" hidden="false" order="65" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_2_1_Retomada_Adto_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_4_2_Ret_Adto_CD_Tax_Servicos" hidden="false" order="66" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_2_2_Retomada_Adto_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_4_3_Ret_Adto_CD_Estorno_Servicos" hidden="false" order="67" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="8_2_1_Retomada_Adto_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="8_4_4_Ret_Adto_CD_Tax_Estorno_Servicos" hidden="false" order="68" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="8_2_2_Retomada_Adto_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_2_1_Venda_Faturada_Loja" hidden="false" order="69" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_2_1_Venda_Faturada_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_2_1_1_Estorno_Venda_Faturada_Loja" hidden="false" order="70" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_2_1_1_Estorno_Venda_Faturada_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_2_2_Venda_Faturada_Impostos_Loja" hidden="false" order="71" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_2_2_2_Estorno_Venda_Faturada_Impostos_Loja" hidden="false" order="72" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_2_Estorno_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_1_1_Venda_Faturada_CD" hidden="false" order="73" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_2_1_Venda_Faturada_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_1_1_1_Estorno_Venda_Faturada_CD" hidden="false" order="74" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_1_1_1_Estorno_Venda_Faturada_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_1_2_Venda_Faturada_Impostos_CD" hidden="false" order="75" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_1_2_1_Estorno_Venda_Faturada_Impostos_CD" hidden="false" order="76" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_2_Estorno_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_3_1_Dev_Venda_Fat_Loja" hidden="false" order="96" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_3_1_Dev_Venda_Fat_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_3_1_Dev_Venda_Fat_Loja_Tax" hidden="false" order="97" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_3_1_Dev_Venda_Fat_Loja_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_3_2_Estorno_Dev_Venda_Fat_Loja" hidden="false" order="98" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_3_2_Estorno_Dev_Venda_Fat_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S2"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_3_2_Estorno_Dev_Venda_Fat_Loja_Tax" hidden="false" order="99" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_3_2_Estorno_Dev_Venda_Fat_Loja_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S2"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_4_1_Dev_Venda_Fat_CD" hidden="false" order="100" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_4_1_Dev_Venda_Fat_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_4_1_Dev_Venda_Fat_CD_Tax" hidden="false" order="101" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_4_1_Dev_Venda_Fat_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_4_2_Estorno_Dev_Venda_Fat_CD" hidden="false" order="102" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_4_2_Estorno_Dev_Venda_Fat_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S2"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_4_2_Estorno_Dev_Venda_Fat_CD_Tax" hidden="false" order="103" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_4_2_Estorno_Dev_Venda_Fat_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S2"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDEV"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_6_1_Venda_Fat_Loja_Servicos" hidden="false" order="119" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_2_1_Venda_Faturada_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_6_2_Venda_Fat_Tax_Loja_Servicos" hidden="false" order="120" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_6_1_1_Estorno_Venda_Fat_Loja_Servicos" hidden="false" order="121" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_2_1_1_Estorno_Venda_Faturada_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_6_2_2_Estorno_Venda_Fat_Tax_Loja_Servicos" hidden="false" order="122" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_2_Estorno_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="A"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_7_1_Venda_Fat_CD_Servicos" hidden="false" order="124" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_2_1_Venda_Faturada_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_7_2_Venda_Fat_Tax_CD_Servicos" hidden="false" order="125" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_7_1_1_Estorno_Venda_Fat_CD_Servicos" hidden="false" order="126" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="10_1_1_1_Estorno_Venda_Faturada_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="10_7_2_1_Estorno_Venda_Fat_Tax_CD_Servicos" hidden="false" order="127" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="10_2_2_2_Estorno_Venda_Faturada_Impostos_Loja"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="S1"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z027"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType_1">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType_1</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="11_2_2_Vendas_CD_Tax" hidden="false" order="128" baseMeasure="#TaxAmount">
+        <descriptions defaultDescription="11_2_2_Vendas_CD_Tax"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+      <measure id="11_2_1_Vendas_CD" hidden="false" order="129" baseMeasure="#TotalNetAmount">
+        <descriptions defaultDescription="11_2_1_Vendas_CD"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="CustomerPaymentTerms">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="Z000"/>
+          </filter>
+          <attributeName>CustomerPaymentTerms</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="BillingDocumentType">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZVAS"/>
+          </filter>
+          <attributeName>BillingDocumentType</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="VLFKZ">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="B"/>
+          </filter>
+          <attributeName>VLFKZ</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="Loja">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>Loja</attributeName>
+        </restriction>
+      </measure>
+    </restrictedMeasures>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="90"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-40" y="310"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="120" y="310"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="400"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="180"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

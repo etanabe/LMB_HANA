@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CV_LMB_PZMEDIO" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="SCRIPT_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" scriptParametersCaseSensitive="true">
+  <origin/>
+  <descriptions defaultDescription="CV_LMB_PZMEDIO"/>
+  <defaultSchema schemaName="_SYS_BIC"/>
+  <localVariables>
+    <variable id="pAnoMes" parameter="true">
+      <descriptions defaultDescription="pAnoMes"/>
+      <variableProperties datatype="VARCHAR" length="6" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources/>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:SqlScriptView" id="Script_View">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute datatype="VARCHAR" id="LOJA" length="10"/>
+        <viewAttribute datatype="VARCHAR" id="COD_PAGAMENTO" length="4"/>
+        <viewAttribute datatype="VARCHAR" id="DS_MEIO_PGTO" length="50"/>
+        <viewAttribute datatype="VARCHAR" id="NUM_PARCELAS" length="10"/>
+        <viewAttribute datatype="DECIMAL" id="SUB_TOTAL" length="15" scale="2"/>
+        <viewAttribute datatype="DECIMAL" id="TOTALV" length="15" scale="2"/>
+        <viewAttribute datatype="DECIMAL" id="PARTICIPACAO" length="15" scale="2"/>
+        <viewAttribute datatype="DECIMAL" id="PRAZO_MEDIO" length="15" scale="2"/>
+        <viewAttribute datatype="DECIMAL" id="VR_PRAZO_MEDIO" length="15" scale="2"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <localVariable>#pAnoMes</localVariable>
+      <definition> 
+ /********* Begin Procedure Script ************/ 
+ BEGIN 
+ 	CALL &quot;_SYS_BIC&quot;.&quot;lmb.fin::LMB_PZMED&quot; (:pAnoMes, var_out);
+
+END /********* End Procedure Script ************/
+
+
+</definition>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Script_View">
+    <descriptions/>
+    <attributes>
+      <attribute id="LOJA" order="1">
+        <descriptions defaultDescription="LOJA"/>
+        <keyMapping columnObjectName="Script_View" columnName="LOJA"/>
+      </attribute>
+      <attribute id="COD_PAGAMENTO" order="2">
+        <descriptions defaultDescription="MEIO_PAGAMENTO"/>
+        <keyMapping columnObjectName="Script_View" columnName="COD_PAGAMENTO"/>
+      </attribute>
+      <attribute id="DS_MEIO_PGTO" order="3">
+        <descriptions defaultDescription="DS_MEIO_PGTO"/>
+        <keyMapping columnObjectName="Script_View" columnName="DS_MEIO_PGTO"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="NUM_PARCELAS" order="4" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NUM_PARCELAS"/>
+        <measureMapping columnObjectName="Script_View" columnName="NUM_PARCELAS"/>
+      </measure>
+      <measure id="SUB_TOTAL" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="SUB_TOTAL"/>
+        <measureMapping columnObjectName="Script_View" columnName="SUB_TOTAL"/>
+      </measure>
+      <measure id="TOTALV" order="6" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TOTALV"/>
+        <measureMapping columnObjectName="Script_View" columnName="TOTALV"/>
+      </measure>
+      <measure id="PARTICIPACAO" order="7" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="PARTICIPACAO"/>
+        <measureMapping columnObjectName="Script_View" columnName="PARTICIPACAO"/>
+      </measure>
+      <measure id="PRAZO_MEDIO" order="8" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="PRAZO_MEDIO"/>
+        <measureMapping columnObjectName="Script_View" columnName="PRAZO_MEDIO"/>
+      </measure>
+      <measure id="VR_PRAZO_MEDIO" order="9" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="VR_PRAZO_MEDIO"/>
+        <measureMapping columnObjectName="Script_View" columnName="VR_PRAZO_MEDIO"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="PrazoMedioRecebimento" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="Prazo Médio de Recebimento"/>
+  <metadata changedAt="2017-06-26 17:37:44.987"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="34"/>
+  <dataSources>
+    <DataSource id="DIMPOSBandeiraCartao" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/lmb.fin/calculationviews/DIMPOSBandeiraCartao</resourceUri>
+    </DataSource>
+    <DataSource id="DIMPOSAdministradoraCartao" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/lmb.fin/calculationviews/DIMPOSAdministradoraCartao</resourceUri>
+    </DataSource>
+    <DataSource id="_POSDW_TLOGF" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+    <DataSource id="_POSDW_TLOGF_EXT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF_EXT" alias="_POSDW_TLOGF_EXT"/>
+    </DataSource>
+    <DataSource id="POS_PPCR_PL10$$_POSDW_TLOGF_EXT$$/POSDW/TLOGF_EXT$$" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF_EXT" alias="_POSDW_TLOGF_EXT"/>
+    </DataSource>
+    <DataSource id="StoreProfileType" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.is.retail.car/calculationviews/StoreProfileType</resourceUri>
+    </DataSource>
+    <DataSource id="TenderTypeName_1" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.is.retail.car/calculationviews/TenderTypeName</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Bandeira">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="TranstypeCode"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="EndTimestamp"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="PaymentCardCode"/>
+        <viewAttribute id="PaymentCardName"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#DIMPOSBandeiraCartao">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="RowKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TranstypeCode" source="TranstypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EndTimestamp" source="EndTimestamp"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardCode" source="PaymentCardCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardName" source="PaymentCardName"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Administradora">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="AdmCode"/>
+        <viewAttribute id="AdmName"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#DIMPOSAdministradoraCartao">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmCode" source="AdmCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmName" source="AdmName"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="DataEnrichment" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="TranstypeCode"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="AdmCode"/>
+        <viewAttribute id="AdmName"/>
+        <viewAttribute id="PaymentCardCode"/>
+        <viewAttribute id="PaymentCardName"/>
+        <viewAttribute id="ParentKey"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Bandeira">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TranstypeCode" source="TranstypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="RowKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardCode" source="PaymentCardCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardName" source="PaymentCardName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+      </input>
+      <input node="#Administradora">
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmCode" source="AdmCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmName" source="AdmName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="ParentKey"/>
+      <joinAttribute name="WorkstationID"/>
+      <joinAttribute name="TransactionNumber"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="SalesTender">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="RECORDQUALIFIER">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+        </viewAttribute>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Installments">
+      <descriptions defaultDescription="Installments"/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="NUMPARC"/>
+        </viewAttribute>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF_EXT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="POS_PPCR_PL10">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="CDADMCART"/>
+        </viewAttribute>
+        <viewAttribute id="PARENTKEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#POS_PPCR_PL10$$_POSDW_TLOGF_EXT$$/POSDW/TLOGF_EXT$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDNAME" source="FIELDNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesTenderConverted" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="FIELDVALUE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="TenderTypecodeAR" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;TENDERTYPECODE&quot; = 'PPCR' and &quot;FIELDVALUE&quot; = '4','PL10',&quot;TENDERTYPECODE&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesTender">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+      </input>
+      <input node="#POS_PPCR_PL10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="PARENTKEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="RETAILSTOREID"/>
+      <joinAttribute name="BUSINESSDAYDATE"/>
+      <joinAttribute name="TRANSINDEX"/>
+      <joinAttribute name="ROWKEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesTender01" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransasctionNumber"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="TransTypeCode"/>
+        <viewAttribute id="TenderTypeCode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="InstallmentsOriginal"/>
+        <viewAttribute id="TenderTypecodeAR"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="Installments" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if( in(&quot;TenderTypeCode&quot;, 'PTCS', 'PTBE', 'PTCH' ,'PCH1', 'PPDB', 'PTCD' ),'0',&#xD;
+&#xD;
+if((isnull(&quot;InstallmentsOriginal&quot;) or ( chars(&quot;InstallmentsOriginal&quot;) &lt; 1 )),'0',&quot;InstallmentsOriginal&quot;))</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="TenderTypeAggr" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;TenderTypecodeAR&quot;,'PPCR','PTCC','PL10','PTCC','PPDB','PTCD',&quot;TenderTypecodeAR&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesTenderConverted">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransasctionNumber" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransTypeCode" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeCode" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAR" source="TenderTypecodeAR"/>
+      </input>
+      <input node="#Installments">
+        <mapping xsi:type="Calculation:AttributeMapping" target="InstallmentsOriginal" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransasctionNumber" source="TRANSNUMBER"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="RowKey"/>
+      <joinAttribute name="WorkstationID"/>
+      <joinAttribute name="TransasctionNumber"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesTender02" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransasctionNumber"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="TransTypeCode"/>
+        <viewAttribute id="TenderTypeCode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="AdmCode"/>
+        <viewAttribute id="AdmNameOrig"/>
+        <viewAttribute id="PaymentCardCode"/>
+        <viewAttribute id="PaymentCardName"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="TenderTypeAggr"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DECIMAL" id="PrazoMedio" length="4" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(int(&quot;Installments&quot;)=0,0,&#xD;
+if(int(&quot;Installments&quot;)>12,7,(int(&quot;Installments&quot;)+1)/2))</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="DECIMAL" id="PrazoMedioValor" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;PrazoMedio&quot;*&quot;TenderAmount&quot;</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="AdmName" length="40" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;TenderTypeCode&quot; = 'PL10', 'CARTAO_PROPRIO', &#xD;
+if(isnull(&quot;AdmNameOrig&quot;) or (strlen(&quot;AdmNameOrig&quot;)&lt;1),'',&quot;AdmNameOrig&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesTender01">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransasctionNumber" source="TransasctionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="RowKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransTypeCode" source="TransTypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeCode" source="TenderTypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeAggr" source="TenderTypeAggr"/>
+      </input>
+      <input node="#DataEnrichment">
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmCode" source="AdmCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmNameOrig" source="AdmName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardCode" source="PaymentCardCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardName" source="PaymentCardName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransasctionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="ParentKey"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="WorkstationID"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="TransasctionNumber"/>
+      <joinAttribute name="RowKey"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="StoreIDxProfile">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="ProfileType"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#StoreProfileType">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesTender03" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransasctionNumber"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="TransTypeCode"/>
+        <viewAttribute id="TenderTypeCode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="AdmCode"/>
+        <viewAttribute id="AdmNameOrig"/>
+        <viewAttribute id="PaymentCardCode"/>
+        <viewAttribute id="PaymentCardName"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="PrazoMedio"/>
+        <viewAttribute id="PrazoMedioValor"/>
+        <viewAttribute id="ProfileTypeOriginal"/>
+        <viewAttribute id="TenderTypeAggr"/>
+        <viewAttribute id="AdmName"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="ProfileType" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;ProfileTypeOriginal&quot;),'YR01',&quot;ProfileTypeOriginal&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesTender02">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransasctionNumber" source="TransasctionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="RowKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransTypeCode" source="TransTypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeCode" source="TenderTypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmCode" source="AdmCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmNameOrig" source="AdmNameOrig"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardCode" source="PaymentCardCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardName" source="PaymentCardName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PrazoMedio" source="PrazoMedio"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PrazoMedioValor" source="PrazoMedioValor"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeAggr" source="TenderTypeAggr"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmName" source="AdmName"/>
+      </input>
+      <input node="#StoreIDxProfile">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileTypeOriginal" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="TenderTypeDesc">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="ProfileType"/>
+        <viewAttribute id="Language">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="P"/>
+        </viewAttribute>
+        <viewAttribute id="TenderType"/>
+        <viewAttribute id="TenderTypeName"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TenderTypeName_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Language" source="Language"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderType" source="TenderType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeName" source="TenderTypeName"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesTender04" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="Plant"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransasctionNumber"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="TransTypeCode"/>
+        <viewAttribute id="TenderTypeCode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="AdmCode"/>
+        <viewAttribute id="AdmNameOrig"/>
+        <viewAttribute id="PaymentCardCode"/>
+        <viewAttribute id="PaymentCardName"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="PrazoMedio"/>
+        <viewAttribute id="PrazoMedioValor"/>
+        <viewAttribute id="ProfileTypeOriginal"/>
+        <viewAttribute id="ProfileType"/>
+        <viewAttribute id="TenderTypeName"/>
+        <viewAttribute id="TenderTypeAggr"/>
+        <viewAttribute id="AdmName"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="AdmNameNull" length="40" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;AdmNameOrig&quot;),'',&quot;AdmNameOrig&quot; )</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesTender03">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Plant" source="Plant"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WorkstationID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransasctionNumber" source="TransasctionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="RowKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransTypeCode" source="TransTypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeCode" source="TenderTypeCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmCode" source="AdmCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmNameOrig" source="AdmNameOrig"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardCode" source="PaymentCardCode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PaymentCardName" source="PaymentCardName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PrazoMedio" source="PrazoMedio"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PrazoMedioValor" source="PrazoMedioValor"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileTypeOriginal" source="ProfileTypeOriginal"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeAggr" source="TenderTypeAggr"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmName" source="AdmName"/>
+      </input>
+      <input node="#TenderTypeDesc">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeName" source="TenderTypeName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeAggr" source="TenderType"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="ProfileType"/>
+      <joinAttribute name="TenderTypeAggr"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="SalesTender04">
+    <descriptions defaultDescription="Prazo Médio de Recebimento"/>
+    <attributes>
+      <attribute id="SAPClient" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPClient"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="SAPClient"/>
+      </attribute>
+      <attribute id="ProfileType" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ProfileType"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="ProfileType"/>
+      </attribute>
+      <attribute id="RetailStoreID" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RetailStoreID"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="RetailStoreID"/>
+      </attribute>
+      <attribute id="Plant" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Plant"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="Plant"/>
+      </attribute>
+      <attribute id="BusinessDayDateOrig" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BusinessDayDateOrig"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="BusinessDayDate"/>
+      </attribute>
+      <attribute id="WorkstationID" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="WorkstationID"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="WorkstationID"/>
+      </attribute>
+      <attribute id="TransactionIndex" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionIndex"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="TransactionIndex"/>
+      </attribute>
+      <attribute id="TransasctionNumber" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransasctionNumber"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="TransasctionNumber"/>
+      </attribute>
+      <attribute id="RowKey" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RowKey"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="RowKey"/>
+      </attribute>
+      <attribute id="ParentKey" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ParentKey"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="ParentKey"/>
+      </attribute>
+      <attribute id="RecordQualifier" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RecordQualifier"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="RecordQualifier"/>
+      </attribute>
+      <attribute id="TransTypeCode" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransTypeCode"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="TransTypeCode"/>
+      </attribute>
+      <attribute id="TenderTypeCode" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderTypeCode"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="TenderTypeCode"/>
+      </attribute>
+      <attribute id="TenderTypeName" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Tender Type Name"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="TenderTypeName"/>
+      </attribute>
+      <attribute id="AdmCode" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="AdmCode"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="AdmCode"/>
+      </attribute>
+      <attribute id="AdmNameOrig" hidden="true" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="AdmName"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="AdmNameOrig"/>
+      </attribute>
+      <attribute id="PaymentCardCode" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PaymentCardCode"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="PaymentCardCode"/>
+      </attribute>
+      <attribute id="PaymentCardName" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PaymentCardName"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="PaymentCardName"/>
+      </attribute>
+      <attribute id="Installments" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Installments"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="Installments"/>
+      </attribute>
+      <attribute id="PrazoMedio" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PrazoMedio"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="PrazoMedio"/>
+      </attribute>
+      <attribute id="TenderTypeAggr" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderTypeAggr"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="TenderTypeAggr"/>
+      </attribute>
+      <attribute id="AdmName" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="AdmName"/>
+        <keyMapping columnObjectName="SalesTender04" columnName="AdmName"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="InstallmentsN" hidden="false" order="24" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="InstallmentsN"/>
+        <keyCalculation datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;Installments&quot;</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="BusinessDayDate" hidden="false" order="26" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BusinessDayDate"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>date(&quot;BusinessDayDateOrig&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="TenderAmount" order="15" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TenderAmount"/>
+        <measureMapping columnObjectName="SalesTender04" columnName="TenderAmount"/>
+      </measure>
+      <measure id="PrazoMedioValor" order="22" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="PrazoMedioValor"/>
+        <measureMapping columnObjectName="SalesTender04" columnName="PrazoMedioValor"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="327" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Bandeira" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="407" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Administradora" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="561" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="DataEnrichment" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="407" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesTender" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="645"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Installments" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POS_PPCR_PL10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="645"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesTenderConverted" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesTender01" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesTender02" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="328" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="StoreIDxProfile" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="482" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesTender03" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="404" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TenderTypeDesc" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="250" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesTender04" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="327" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,144 @@
+PROCEDURE "_SYS_BIC"."lmb.fin::LMB_PZMED" 
+(
+        IN pAnoMes VARCHAR (6)
+        ,OUT sRESULT TABLE 
+            (
+                LOJA VARCHAR (10)
+                , COD_PAGAMENTO VARCHAR (4)
+                , DS_MEIO_PGTO VARCHAR (50)
+                , NUM_PARCELAS VARCHAR (10)
+                , SUB_TOTAL DECIMAL (15,2)
+                , TOTALV DECIMAL (15,2)
+                , PARTICIPACAO DECIMAL (15,2)
+                , PRAZO_MEDIO DECIMAL (15,2)
+                , VR_PRAZO_MEDIO DECIMAL (15,2)  
+            )
+    )
+
+LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER 
+    --DEFAULT SCHEMA <default_schema_name>
+    READS SQL DATA AS
+BEGIN
+    -- Meio de pagamento sem parcelas
+    sRESULT =
+        SELECT 
+            TLF."RETAILSTOREID"     AS "LOJA"
+            , TLF."TENDERTYPECODE"    AS "COD_PAGAMENTO"
+            , NULL                    AS "DS_MEIO_PGTO"
+            , NULL                    AS "NUM_PARCELAS"
+            , NULL                    AS "SUB_TOTAL"
+            , SUM(TLF."TENDERAMOUNT") AS "TOTALV"
+            , ROUND(SUM(TLF."TENDERAMOUNT") / ( SELECT SUM(TLF1."TURNOVER") 
+                                                FROM  "SAPCAD"."/POSDW/TLOGF" TLF1 
+                                                WHERE TLF1."RECORDQUALIFIER" = '1' --Itens de Cabeçalho
+                                                AND LEFT(TLF1."BUSINESSDAYDATE", 6) = pAnoMes 
+                                                GROUP BY TLF1."RETAILSTOREID"  
+                                                HAVING TLF."RETAILSTOREID"  = TLF1."RETAILSTOREID") * 100, 2)
+                                      AS "PARTICIPACAO"
+            , NULL                    AS "PRAZO_MEDIO"
+            , NULL                    AS "VR_PRAZO_MEDIO"
+        FROM  "SAPCAD"."/POSDW/TLOGF" TLF
+        WHERE TLF."RECORDQUALIFIER" = '21' -- Itens de Pagamento
+        AND TLF."TENDERTYPECODE" NOT IN ('PTCC','PTFI','PTMC','PTTE','PTUR','PTVI')
+        AND LEFT(TLF."BUSINESSDAYDATE", 6) = pAnoMes
+        GROUP BY TLF."RETAILSTOREID", TLF."TENDERTYPECODE"
+        UNION
+        -- Meio de pagamento com parcelas
+        SELECT 
+            TLF."RETAILSTOREID"
+            , TLF."TENDERTYPECODE"
+            , NULL
+            , NULL
+            , NULL
+            , SUM(TLF."TENDERAMOUNT" * CAST(TLF."TENDERNUMBER" AS INTEGER))
+            , ROUND(SUM(TLF."TENDERAMOUNT" * CAST(TLF."TENDERNUMBER" AS INTEGER)) / 
+                   (SELECT SUM(TLF1."TURNOVER") 
+                    FROM "SAPCAD"."/POSDW/TLOGF" TLF1 
+                    WHERE TLF1."RECORDQUALIFIER" = '1' --Itens de Cabeçalho 
+                    AND LEFT(TLF1."BUSINESSDAYDATE", 6) = pAnoMes 
+                    GROUP BY TLF1."RETAILSTOREID"  
+                    HAVING TLF."RETAILSTOREID"  = TLF1."RETAILSTOREID") * 100, 2)
+            , NULL
+            , NULL
+        FROM  "SAPCAD"."/POSDW/TLOGF" TLF
+        WHERE TLF."RECORDQUALIFIER" = '21' -- Itens de Pagamento
+        AND TLF."TENDERTYPECODE" IN ('PTCC','PTFI','PTMC','PTTE','PTUR','PTVI')
+        AND LEFT(TLF."BUSINESSDAYDATE", 6) = pAnoMes
+        GROUP BY TLF."RETAILSTOREID", TLF."TENDERTYPECODE"
+        UNION
+        --Meio de pagamento com parcelas com descricao
+        SELECT
+            TLF."RETAILSTOREID"
+            , TLF."TENDERTYPECODE"
+            , (SELECT PAG."DESCRIPTION" FROM "SAPCAD"."/POSDW/TENDTYT" PAG
+               WHERE PAG."TENDERTYPECODE"=TLF."TENDERTYPECODE"
+               AND PAG."PROFILETYPE"='YR01'
+               AND PAG."MANDT"='110'
+               AND PAG."SPRAS"='P'
+              )
+            , CAST(TLF."TENDERNUMBER" AS INTEGER) -- numero de parcelas substituir pelo campo novo Linx
+            , SUM(TLF."TENDERAMOUNT" * CAST(TLF."TENDERNUMBER" AS INTEGER))
+            , SUM(TLF."TENDERAMOUNT" * CAST(TLF."TENDERNUMBER" AS INTEGER))
+            , ROUND(SUM(TLF."TENDERAMOUNT" * CAST(TLF."TENDERNUMBER" AS INTEGER)) /
+                   (SELECT SUM(TLF1."TURNOVER")
+                    FROM "SAPCAD"."/POSDW/TLOGF" TLF1
+                    WHERE TLF1."RECORDQUALIFIER" = '1' --Itens de Cabeçalho
+                    AND LEFT(TLF1."BUSINESSDAYDATE", 6) =pAnoMes
+                    GROUP BY TLF1."RETAILSTOREID"
+                    HAVING TLF."RETAILSTOREID"  = TLF1."RETAILSTOREID") * 100, 2)
+            , (
+                CASE
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) IS NULL THEN NULL
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 1   THEN 1
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 2   THEN 1.5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 3   THEN 2
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 4   THEN 2.5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 5   THEN 3
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 6   THEN 3.5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 7   THEN 4
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 8   THEN 4.5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 9   THEN 5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 10  THEN 5.5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 11  THEN 6
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 12  THEN 6.5
+                    WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) > 12  THEN 7
+                END
+            )
+            , (
+              CASE
+                WHEN TLF."TENDERNUMBER" IS NULL THEN NULL
+                ELSE ROUND(
+                            SUM(TLF."TENDERAMOUNT" * CAST(TLF."TENDERNUMBER" AS INTEGER))
+                          *
+                            (
+                              CASE
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) IS NULL THEN NULL
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 1   THEN 1
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 2   THEN 1.5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 3   THEN 2
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 4   THEN 2.5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 5   THEN 3
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 6   THEN 3.5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 7   THEN 4
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 8   THEN 4.5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 9   THEN 5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 10  THEN 5.5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 11  THEN 6
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) = 12  THEN 6.5
+                                                WHEN CAST(TLF."TENDERNUMBER" AS INTEGER) > 12  THEN 7
+                              END
+                            )
+                          , 2
+                     )
+              END
+            )
+        FROM  "SAPCAD"."/POSDW/TLOGF" TLF
+        WHERE TLF."RECORDQUALIFIER" = '21' -- Itens de Pagamento
+        AND TLF."TENDERTYPECODE" IN ('PTCC','PTFI','PTMC','PTTE','PTUR','PTVI')
+        AND LEFT(TLF."BUSINESSDAYDATE", 6) = pAnoMes
+        GROUP BY TLF."RETAILSTOREID", TLF."TENDERTYPECODE", TLF."TENDERNUMBER"
+        ORDER BY 1, 2, 3
+    ;
+
+END;

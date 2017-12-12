@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" schemaVersion="2.3" id="LMB_RECAP_BNDES" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="LMB_RECAP_BNDES"/>
+  <metadata changedAt="2017-12-12 18:24:39.569"/>
+  <localVariables>
+    <variable id="IP_Store" parameter="true">
+      <descriptions defaultDescription="IP_Store"/>
+      <variableProperties datatype="NVARCHAR" length="4" mandatory="false" scale="0">
+        <valueDomain type="AttributeValue">
+          <attribute name="PLANT"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+        <defaultRange/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="_POSDW_TLOGF" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_CAR" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+    <DataSource id="Projection_2$$_POSDW_TLOGF$$/POSDW/TLOGF$$" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_CAR" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="2"/>
+            <operands value="3"/>
+          </filter>
+        </viewAttribute>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="RECORDQUALIFIER">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="30"/>
+        </viewAttribute>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="2"/>
+            <operands value="3"/>
+          </filter>
+        </viewAttribute>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="RECORDQUALIFIER">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+        </viewAttribute>
+        <viewAttribute id="TENDERTYPECODE">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+        </viewAttribute>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_2$$_POSDW_TLOGF$$/POSDW/TLOGF$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+      </input>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+      </input>
+      <joinAttribute name="BUSINESSDAYDATE"/>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="PARENTKEY"/>
+      <joinAttribute name="PLANT"/>
+      <joinAttribute name="TRANSNUMBER"/>
+      <joinAttribute name="TRANSINDEX"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="BUSINESSDAYDATE" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BUSINESSDAYDATE"/>
+        <keyMapping columnObjectName="Join_1" columnName="BUSINESSDAYDATE"/>
+      </attribute>
+      <attribute id="MANDT" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+      </attribute>
+      <attribute id="TRANSNUMBER" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TRANSNUMBER"/>
+        <keyMapping columnObjectName="Join_1" columnName="TRANSNUMBER"/>
+      </attribute>
+      <attribute id="PLANT" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PLANT"/>
+        <keyMapping columnObjectName="Join_1" columnName="PLANT"/>
+      </attribute>
+      <attribute id="PAYMENTCARD" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PAYMENTCARD"/>
+        <keyMapping columnObjectName="Join_1" columnName="PAYMENTCARD"/>
+      </attribute>
+      <attribute id="TRANSINDEX" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TRANSINDEX"/>
+        <keyMapping columnObjectName="Join_1" columnName="TRANSINDEX"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="TENDERAMOUNT" order="3" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TENDERAMOUNT"/>
+        <measureMapping columnObjectName="Join_1" columnName="TENDERAMOUNT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures>
+      <measure id="3_1_2_Cielo_BNDES" hidden="false" order="7" baseMeasure="#TENDERAMOUNT">
+        <descriptions defaultDescription="3_1_2_Cielo_BNDES"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PAYMENTCARD">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="0012"/>
+          </filter>
+          <attributeName>PAYMENTCARD</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="3_2_2_Rede_BNDES" hidden="false" order="8" baseMeasure="#TENDERAMOUNT">
+        <descriptions defaultDescription="3_2_2_Rede_BNDES"/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PAYMENTCARD">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="0013"/>
+          </filter>
+          <attributeName>PAYMENTCARD</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+    </restrictedMeasures>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-30" y="280"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="120" y="280"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="180"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

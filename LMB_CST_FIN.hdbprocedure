@@ -1,0 +1,77 @@
+PROCEDURE "_SYS_BIC"."lmb.fin::LMB_CST_FIN"
+	( 
+		IN pLOJA Varchar (10), IN pDATA_INICIO Varchar (8), IN pDATA_FIM Varchar (8),
+        OUT sRESULT TABLE (CENTRO VARCHAR(10), PERIODO VARCHAR (8), VR_VENDAS DECIMAL (18,2), ANO_VIGENTE VARCHAR (4), 
+        				   PARCELAS INTEGER, NUM_PARCELAS INTEGER, COD_PAGAMENTO VARCHAR (4), MEIO_PAGAMENTO VARCHAR (50),TAXA DECIMAL, VR_CUSTO DECIMAL (18,2))
+	)
+	LANGUAGE SQLSCRIPT 
+	SQL SECURITY INVOKER 
+	READS SQL DATA AS
+	BEGIN
+		sRESULT= 
+			SELECT 
+				"ANALITICO"."CENTRO"
+			   	,"ANALITICO"."PERIODO"
+		       	,SUM ("ANALITICO"."VR_VENDAS") AS  "VR_VENDAS"
+		       	,"ANALITICO"."ANO_VIGENTE"
+		       	,"ANALITICO"."PARCELAS"
+		       	,"ANALITICO"."NUM_PARCELAS"
+		       	,"ANALITICO"."COD_PAGAMENTO"
+		       	,"ANALITICO"."MEIO_PAGAMENTO"
+		       	,"ANALITICO"."TAXA"
+		       	,SUM( "ANALITICO"."VR_CUSTO") AS "VR_CUSTO"
+			FROM 
+		     (SELECT
+		            CAST (TLF."PLANT" AS INTEGER) "CENTRO",
+		            TLF."BUSINESSDAYDATE" "PERIODO",
+		            TLF."TURNOVER" "VR_VENDAS",
+		            TLF."TENDERTYPECODE" "COD_PAGAMENTO",
+		            PAG."DESCRIPTION" "MEIO_PAGAMENTO",
+		            TAX."GJAHR" "ANO_VIGENTE",
+		            CAST(TAX."PARCELAS" AS INTEGER) "PARCELAS",
+		            TAX."TAXA" "TAXA",
+		            MAX (CAST(TLF."TENDERNUMBER" AS INTEGER)) "NUM_PARCELAS",
+		            CASE WHEN CAST(TAX."PARCELAS" AS INTEGER) = MAX (CAST(TLF."TENDERNUMBER" AS INTEGER)) 
+		                THEN
+		                    TO_DECIMAL (ROUND (TO_DECIMAL (TLF."TURNOVER",15,2)/100 * TAX."TAXA",2),15,2) 
+		                ELSE
+		                    0
+		            END  "VR_CUSTO"  
+		      FROM
+		           "SAPCAD"."/POSDW/TLOGF" TLF,
+		           "SAPERPECT"."ZTFID_PER_GES_BU" TAX,
+		           "SAPCAD"."/POSDW/TENDTYT" PAG
+		      WHERE
+		           TLF."TENDERTYPECODE" IN ('PTCC', 'PTFI')
+		           AND PAG."TENDERTYPECODE"=TLF."TENDERTYPECODE"
+		           AND PAG."SPRAS"='P'
+		           AND TLF."MANDT" = TAX."MANDT"
+		                    
+		      GROUP BY
+		              TLF."PLANT",
+		              TLF."BUSINESSDAYDATE",
+		              TLF."TURNOVER",
+		              TAX."GJAHR",
+		              TAX."PARCELAS",
+		              TLF."TENDERNUMBER",
+		              TLF."TENDERTYPECODE",
+		              PAG."DESCRIPTION",
+		              TAX."TAXA"
+		       HAVING 
+		           CAST(TAX."PARCELAS" AS INTEGER) = MAX (CAST(TLF."TENDERNUMBER" AS INTEGER))) "ANALITICO"
+                 
+			WHERE
+	     		"ANALITICO"."PARCELAS"="ANALITICO"."NUM_PARCELAS"
+		      	AND "ANALITICO"."CENTRO" IN (pLOJA)
+		      	AND "ANALITICO"."PERIODO" BETWEEN pDATA_INICIO AND pDATA_FIM
+		      	AND "ANALITICO"."ANO_VIGENTE" = LEFT ("ANALITICO"."PERIODO",4)
+			GROUP BY 
+			    "ANALITICO"."CENTRO",
+			    "ANALITICO"."PERIODO",
+			    "ANALITICO"."ANO_VIGENTE",
+			    "ANALITICO"."PARCELAS",
+			    "ANALITICO"."NUM_PARCELAS",
+			    "ANALITICO"."COD_PAGAMENTO",
+			    "ANALITICO"."MEIO_PAGAMENTO",
+			    "ANALITICO"."TAXA" ;
+	END;

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="DIMPOSAdministradoraCartao" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection">
+  <origin/>
+  <descriptions defaultDescription="Administradora de cartao de credito"/>
+  <metadata activatedAt="2017-03-17 18:21:49.0" changedAt="2017-03-23 09:32:16.212" createdAt="2017-03-23 09:32:16.212"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="/POSDW/TLOGF_EXT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF_EXT"/>
+    </DataSource>
+    <DataSource id="Nome$$$$/POSDW/TLOGF_EXT$$" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF_EXT"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Codigo">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="CDADMCART"/>
+        </viewAttribute>
+        <viewAttribute id="FIELDVALUE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#/POSDW/TLOGF_EXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDNAME" source="FIELDNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Nome">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="NOMEADMCAR"/>
+        </viewAttribute>
+        <viewAttribute id="FIELDVALUE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Nome$$$$/POSDW/TLOGF_EXT$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDNAME" source="FIELDNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="WorkstationID"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="AdmCode"/>
+        <viewAttribute id="AdmName"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Codigo">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmCode" source="FIELDVALUE"/>
+      </input>
+      <input node="#Nome">
+        <mapping xsi:type="Calculation:AttributeMapping" target="AdmName" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WorkstationID" source="WORKSTATIONID"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="ParentKey"/>
+      <joinAttribute name="RecordQualifier"/>
+      <joinAttribute name="TransactionNumber"/>
+      <joinAttribute name="WorkstationID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions defaultDescription="Administradora de cartao de credito"/>
+    <attributes>
+      <attribute id="SAPClient" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPClient"/>
+        <keyMapping columnObjectName="Join_1" columnName="SAPClient"/>
+      </attribute>
+      <attribute id="RetailStoreID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RetailStoreID"/>
+        <keyMapping columnObjectName="Join_1" columnName="RetailStoreID"/>
+      </attribute>
+      <attribute id="BusinessDayDate" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BusinessDayDate"/>
+        <keyMapping columnObjectName="Join_1" columnName="BusinessDayDate"/>
+      </attribute>
+      <attribute id="TransactionIndex" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionIndex"/>
+        <keyMapping columnObjectName="Join_1" columnName="TransactionIndex"/>
+      </attribute>
+      <attribute id="ParentKey" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ParentKey"/>
+        <keyMapping columnObjectName="Join_1" columnName="ParentKey"/>
+      </attribute>
+      <attribute id="RecordQualifier" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RecordQualifier"/>
+        <keyMapping columnObjectName="Join_1" columnName="RecordQualifier"/>
+      </attribute>
+      <attribute id="WorkstationID" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="WorkstationID"/>
+        <keyMapping columnObjectName="Join_1" columnName="WorkstationID"/>
+      </attribute>
+      <attribute id="TransactionNumber" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionNumber"/>
+        <keyMapping columnObjectName="Join_1" columnName="TransactionNumber"/>
+      </attribute>
+      <attribute id="AdmCode" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="AdmCode"/>
+        <keyMapping columnObjectName="Join_1" columnName="AdmCode"/>
+      </attribute>
+      <attribute id="AdmName" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="FIELDVALUE"/>
+        <keyMapping columnObjectName="Join_1" columnName="AdmName"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize/>
+      </shape>
+      <shape expanded="true" modelObjectName="Codigo" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="20" y="400"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Nome" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="180" y="400"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="110" y="220"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

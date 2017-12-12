@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="LMB_RECAP_SERV" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="LMB_RECAP_SERV"/>
+  <metadata changedAt="2017-12-12 10:05:36.774"/>
+  <localVariables/>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="VBRK" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="VBRK"/>
+    </DataSource>
+    <DataSource id="KONV" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="KONV"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="VBELN"/>
+        <viewAttribute id="FKART"/>
+        <viewAttribute id="FKDAT"/>
+        <viewAttribute id="KNUMV"/>
+        <viewAttribute id="ZTERM"/>
+        <viewAttribute id="XBLNR"/>
+        <viewAttribute id="MWSBK"/>
+        <viewAttribute id="NETWR"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#VBRK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VBELN" source="VBELN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FKART" source="FKART"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FKDAT" source="FKDAT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KNUMV" source="KNUMV"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ZTERM" source="ZTERM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="XBLNR" source="XBLNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MWSBK" source="MWSBK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NETWR" source="NETWR"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="KNUMV"/>
+        <viewAttribute id="KSCHL">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZDAC"/>
+        </viewAttribute>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="KBETR"/>
+        <viewAttribute id="KWERT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#KONV">
+        <mapping xsi:type="Calculation:AttributeMapping" target="KNUMV" source="KNUMV"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KSCHL" source="KSCHL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KBETR" source="KBETR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KWERT" source="KWERT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="KBETR"/>
+        <viewAttribute id="VBELN"/>
+        <viewAttribute id="FKDAT"/>
+        <viewAttribute id="FKART"/>
+        <viewAttribute id="ZTERM"/>
+        <viewAttribute id="XBLNR"/>
+        <viewAttribute id="KWERT"/>
+        <viewAttribute hidden="true" id="JOIN$KNUMV$KNUMV"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VBELN" source="VBELN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FKDAT" source="FKDAT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FKART" source="FKART"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ZTERM" source="ZTERM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="XBLNR" source="XBLNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$KNUMV$KNUMV" source="KNUMV"/>
+      </input>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="KBETR" source="KBETR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KWERT" source="KWERT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$KNUMV$KNUMV" source="KNUMV"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="JOIN$KNUMV$KNUMV"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+      </attribute>
+      <attribute id="VBELN" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Billing Document"/>
+        <keyMapping columnObjectName="Join_1" columnName="VBELN"/>
+      </attribute>
+      <attribute id="FKDAT" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Billing date for billing index and printout"/>
+        <keyMapping columnObjectName="Join_1" columnName="FKDAT"/>
+      </attribute>
+      <attribute id="FKART" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Billing Type"/>
+        <keyMapping columnObjectName="Join_1" columnName="FKART"/>
+      </attribute>
+      <attribute id="ZTERM" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Terms of Payment Key"/>
+        <keyMapping columnObjectName="Join_1" columnName="ZTERM"/>
+      </attribute>
+      <attribute id="XBLNR" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Reference Document Number"/>
+        <keyMapping columnObjectName="Join_1" columnName="XBLNR"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="KBETR" order="2" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Rate (condition amount or percentage)"/>
+        <measureMapping columnObjectName="Join_1" columnName="KBETR"/>
+      </measure>
+      <measure id="KWERT" order="8" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Condition value"/>
+        <measureMapping columnObjectName="Join_1" columnName="KWERT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-40" y="280"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="120" y="280"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="170"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

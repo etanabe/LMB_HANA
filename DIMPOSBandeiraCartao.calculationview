@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="DIMPOSBandeiraCartao" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection">
+  <origin/>
+  <descriptions defaultDescription="Bandeira Cartão"/>
+  <metadata activatedAt="2017-03-17 18:52:31.0" changedAt="2017-03-23 09:32:16.868" createdAt="2017-03-23 09:32:16.868"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="30"/>
+  <dataSources>
+    <DataSource id="/POSDW/TLOGF" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAD" columnObjectName="/POSDW/TLOGF"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="PARENTKEY"/>
+        <viewAttribute id="RECORDQUALIFIER">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="30"/>
+        </viewAttribute>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="ENDTIMESTAMP"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#/POSDW/TLOGF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENDTIMESTAMP" source="ENDTIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+      </input>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_1">
+    <descriptions defaultDescription="Bandeira Cartão"/>
+    <attributes>
+      <attribute id="SAPClient" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPClient"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MANDT"/>
+      </attribute>
+      <attribute id="RetailStoreID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RetailStoreID"/>
+        <keyMapping columnObjectName="Projection_1" columnName="RETAILSTOREID"/>
+      </attribute>
+      <attribute id="BusinessDayDate" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BusinessDayDate"/>
+        <keyMapping columnObjectName="Projection_1" columnName="BUSINESSDAYDATE"/>
+      </attribute>
+      <attribute id="TransactionIndex" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionIndex"/>
+        <keyMapping columnObjectName="Projection_1" columnName="TRANSINDEX"/>
+      </attribute>
+      <attribute id="RowKey" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RowKey"/>
+        <keyMapping columnObjectName="Projection_1" columnName="ROWKEY"/>
+      </attribute>
+      <attribute id="ParentKey" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ParentKey"/>
+        <keyMapping columnObjectName="Projection_1" columnName="PARENTKEY"/>
+      </attribute>
+      <attribute id="RecordQualifier" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RecordQualifier"/>
+        <keyMapping columnObjectName="Projection_1" columnName="RECORDQUALIFIER"/>
+      </attribute>
+      <attribute id="TranstypeCode" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TranstypeCode"/>
+        <keyMapping columnObjectName="Projection_1" columnName="TRANSTYPECODE"/>
+      </attribute>
+      <attribute id="WorkstationID" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="WorkstationID"/>
+        <keyMapping columnObjectName="Projection_1" columnName="WORKSTATIONID"/>
+      </attribute>
+      <attribute id="TransactionNumber" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionNumber"/>
+        <keyMapping columnObjectName="Projection_1" columnName="TRANSNUMBER"/>
+      </attribute>
+      <attribute id="EndTimestamp" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="EndTimestamp"/>
+        <keyMapping columnObjectName="Projection_1" columnName="ENDTIMESTAMP"/>
+      </attribute>
+      <attribute id="Plant" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Plant"/>
+        <keyMapping columnObjectName="Projection_1" columnName="PLANT"/>
+      </attribute>
+      <attribute id="PaymentCardCode" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PaymentCardCode"/>
+        <keyMapping columnObjectName="Projection_1" columnName="PAYMENTCARD"/>
+      </attribute>
+      <attribute id="PaymentCardName" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PaymentCardName"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MEDIAISSUERID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="220"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

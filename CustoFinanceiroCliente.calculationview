@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CustoFinanceiroCliente" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="Arquivo para contabilização do Custo Financeiro do Cliente&#xD;&#xA;"/>
+  <metadata changedAt="2017-09-25 18:06:26.218"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="36"/>
+  <dataSources>
+    <DataSource id="POSSales" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.is.retail.car/calculationviews/POSSales</resourceUri>
+    </DataSource>
+    <DataSource id="WRF_MATGRP_PROD" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="WRF_MATGRP_PROD"/>
+    </DataSource>
+    <DataSource id="POSLogHeader" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.is.retail.car/calculationviews/POSLogHeader</resourceUri>
+    </DataSource>
+    <DataSource id="_POSDW_TLOGF" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAP" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+    <DataSource id="_POSDW_TLOGF_EXT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAP" columnObjectName="/POSDW/TLOGF_EXT" alias="_POSDW_TLOGF_EXT"/>
+    </DataSource>
+    <DataSource id="POSFreight$$_POSDW_TLOGF$$/POSDW/TLOGF$$" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAPCAP" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+    <DataSource id="ZTFID_PER_GES_BU" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="ZTFID_PER_GES_BU"/>
+    </DataSource>
+    <DataSource id="StoreProfileType" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.is.retail.car/calculationviews/StoreProfileType</resourceUri>
+    </DataSource>
+    <DataSource id="TenderTypeName_1" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/sap.is.retail.car/calculationviews/TenderTypeName</resourceUri>
+    </DataSource>
+    <DataSource id="WRF_MATGRP_STRCT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="WRF_MATGRP_STRCT"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="POSSalesArticle">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionIndex"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#POSSales">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Hierarchy">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="MATNR"/>
+        <viewAttribute id="DELETEFLAG">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value=""/>
+        </viewAttribute>
+        <viewAttribute id="HIERNODE2"/>
+        <viewAttribute id="HIER_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#WRF_MATGRP_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATNR" source="MATNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DELETEFLAG" source="DELETEFLAG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERNODE2" source="HIERNODE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIER_ID" source="HIER_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="POSArticleHierarchy" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#POSSalesArticle">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+      </input>
+      <input node="#Hierarchy">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HIERNODE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HIER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="MATNR"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="Article"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="POSTotalTransaction">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="TransactionAmount"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#POSLogHeader">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="POSTender">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="RowKey"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="RecordQualifier">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+        </viewAttribute>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="DATASTATUS">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="2"/>
+            <operands value="3"/>
+          </filter>
+        </viewAttribute>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RowKey" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="POSInstallments">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="ParentKey"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="NUMPARC"/>
+        </viewAttribute>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="Installments" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>string(rightstr(&quot;FIELDVALUE&quot;,2))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#_POSDW_TLOGF_EXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ParentKey" source="PARENTKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDNAME" source="FIELDNAME"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="POSTenderInstallments" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="InstallmentsOriginal"/>
+        <viewAttribute hidden="true" id="JOIN$RowKey$ParentKey"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="Installments" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if((isnull(&quot;Installments_trf&quot;) or ( chars(&quot;Installments_trf&quot;) &lt; 1 )),'0',&quot;Installments_trf&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="VARCHAR" id="Installments_trf" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;TenderTypecode&quot;, 'PTCC', &quot;InstallmentsOriginal&quot;, 'PPCR', &quot;InstallmentsOriginal&quot;, 'PTFI', &quot;InstallmentsOriginal&quot;, 'PL10', &quot;InstallmentsOriginal&quot;, '0' )</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#POSTender">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RowKey$ParentKey" source="RowKey"/>
+      </input>
+      <input node="#POSInstallments">
+        <mapping xsi:type="Calculation:AttributeMapping" target="InstallmentsOriginal" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RowKey$ParentKey" source="ParentKey"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="JOIN$RowKey$ParentKey"/>
+      <joinAttribute name="TransactionNumber"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="POSFreight">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="RecordQualifier">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="8"/>
+        </viewAttribute>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="TaxTypecode">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZFRE"/>
+        </viewAttribute>
+        <viewAttribute id="TaxAmount"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#POSFreight$$_POSDW_TLOGF$$/POSDW/TLOGF$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxTypecode" source="TAXTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TAXAMOUNT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="POSFreigthAggr">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="RecordQualifier"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="TaxTypecode"/>
+        <viewAttribute aggregationType="sum" id="TaxAmount"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#POSFreight">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RecordQualifier" source="RecordQualifier"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxTypecode" source="TaxTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TaxAmount" source="TaxAmount"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesHier" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="BusinessYear" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>leftstr(&quot;BusinessDayDate&quot;,4)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#POSTotalTransaction">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+      </input>
+      <input node="#POSArticleHierarchy">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="TransactionNumber"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesHierFreight" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="Freight"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SalesHier">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#POSFreigthAggr">
+        <mapping xsi:type="Calculation:AttributeMapping" target="Freight" source="TaxAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="TransactionIndex"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesHierTender" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="Freight"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="FLOAT" id="TenderAmountRated" length="16" expressionLanguage="COLUMN_ENGINE">
+          <formula>if( &quot;TransactionAmount&quot; !=  0 ,&quot;SalesAmount&quot;/(&quot;TransactionAmount&quot;-&quot;Freight&quot;)*&quot;TenderAmount&quot;, &quot;TenderAmount&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesHierFreight">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Freight" source="Freight"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#POSTenderInstallments">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+      <joinAttribute name="BusinessDayDate"/>
+      <joinAttribute name="TransactionIndex"/>
+      <joinAttribute name="TransactionNumber"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FeeTable">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="Fee"/>
+        <viewAttribute id="PARCELAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="Installments" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>string(int(&quot;PARCELAS&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#ZTFID_PER_GES_BU">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="GJAHR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Fee" source="TAXA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARCELAS" source="PARCELAS"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesFee" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="TenderAmountRated"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="Fee"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="FLOAT" id="FeeRated" length="16" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;Fee&quot;*&quot;TenderAmountRated&quot;/100</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="VARCHAR" id="StoreID" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>rightstr(&quot;RetailStoreID&quot;,4)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="TenderTypecodeAggr" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;TenderTypecode&quot;,'PL10', 'PTCC', 'PPCR', 'PTCC', &quot;TenderTypecode&quot; )</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesHierTender">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmountRated" source="TenderAmountRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#FeeTable">
+        <mapping xsi:type="Calculation:AttributeMapping" target="Fee" source="Fee"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="BusinessYear"/>
+      <joinAttribute name="Installments"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="StoreIDxProfile">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="ProfileType"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#StoreProfileType">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesFeeProfile" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="TenderAmountRated"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="Fee"/>
+        <viewAttribute id="FeeRated"/>
+        <viewAttribute id="StoreID"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="ProfileTypeOriginal"/>
+        <viewAttribute id="TenderTypecodeAggr"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="ProfileType" length="4" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;ProfileTypeOriginal&quot;),'YR01',&quot;ProfileTypeOriginal&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SalesFee">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmountRated" source="TenderAmountRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Fee" source="Fee"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FeeRated" source="FeeRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="StoreID" source="StoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggr" source="TenderTypecodeAggr"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#StoreIDxProfile">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileTypeOriginal" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="RetailStoreID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="TenderNames">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="ProfileType"/>
+        <viewAttribute id="Language">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="P"/>
+        </viewAttribute>
+        <viewAttribute id="TenderType"/>
+        <viewAttribute id="TenderTypeName"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TenderTypeName_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Language" source="Language"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderType" source="TenderType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeName" source="TenderTypeName"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesFeeWNames" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="TenderAmountRated"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="Fee"/>
+        <viewAttribute id="FeeRated"/>
+        <viewAttribute id="StoreID"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="ProfileTypeOriginal"/>
+        <viewAttribute id="ProfileType"/>
+        <viewAttribute id="TenderTypeName"/>
+        <viewAttribute id="TenderTypecodeAggr"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SalesFeeProfile">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmountRated" source="TenderAmountRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Fee" source="Fee"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FeeRated" source="FeeRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="StoreID" source="StoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileTypeOriginal" source="ProfileTypeOriginal"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggr" source="TenderTypecodeAggr"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#TenderNames">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeName" source="TenderTypeName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderType"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="ProfileType"/>
+      <joinAttribute name="TenderTypecode"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesFeeRatedWNames" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="TenderAmountRated"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="Fee"/>
+        <viewAttribute id="FeeRated"/>
+        <viewAttribute id="StoreID"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="ProfileTypeOriginal"/>
+        <viewAttribute id="ProfileType"/>
+        <viewAttribute id="TenderTypeName"/>
+        <viewAttribute id="TenderTypecodeAggr"/>
+        <viewAttribute id="TenderTypecodeAggrName"/>
+        <viewAttribute id="HierarchyID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SalesFeeWNames">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmountRated" source="TenderAmountRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Fee" source="Fee"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FeeRated" source="FeeRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="StoreID" source="StoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileTypeOriginal" source="ProfileTypeOriginal"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeName" source="TenderTypeName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggr" source="TenderTypecodeAggr"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#TenderNames">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggrName" source="TenderTypeName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggr" source="TenderType"/>
+      </input>
+      <joinAttribute name="SAPClient"/>
+      <joinAttribute name="ProfileType"/>
+      <joinAttribute name="TenderTypecodeAggr"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="HierarchyText">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HIER_ID"/>
+        <viewAttribute id="LTEXT"/>
+        <viewAttribute id="LTEXTG"/>
+        <viewAttribute id="LTEXTLG"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="NODE"/>
+        <viewAttribute id="SPRAS">
+          <filter xsi:type="AccessControl:SingleValueFilter" including="true" value="P"/>
+        </viewAttribute>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#WRF_MATGRP_STRCT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIER_ID" source="HIER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LTEXT" source="LTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LTEXTG" source="LTEXTG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LTEXTLG" source="LTEXTLG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NODE" source="NODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="SalesFeeRatedHierText" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPClient"/>
+        <viewAttribute id="RetailStoreID"/>
+        <viewAttribute id="BusinessDayDate"/>
+        <viewAttribute id="BusinessYear"/>
+        <viewAttribute id="TransactionIndex"/>
+        <viewAttribute id="TransactionNumber"/>
+        <viewAttribute id="OrderChannel"/>
+        <viewAttribute id="Article"/>
+        <viewAttribute id="HierarchyNode"/>
+        <viewAttribute id="SalesAmount"/>
+        <viewAttribute id="TransactionAmount"/>
+        <viewAttribute id="TenderAmountRated"/>
+        <viewAttribute id="TenderTypecode"/>
+        <viewAttribute id="TenderAmount"/>
+        <viewAttribute id="Fee"/>
+        <viewAttribute id="FeeRated"/>
+        <viewAttribute id="StoreID"/>
+        <viewAttribute id="Installments"/>
+        <viewAttribute id="ProfileTypeOriginal"/>
+        <viewAttribute id="ProfileType"/>
+        <viewAttribute id="TenderTypeName"/>
+        <viewAttribute id="TenderTypecodeAggr"/>
+        <viewAttribute id="TenderTypecodeAggrName"/>
+        <viewAttribute id="HierarchyID"/>
+        <viewAttribute id="HIerarchyText"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SalesFeeRatedWNames">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPClient" source="SAPClient"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RetailStoreID" source="RetailStoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessDayDate" source="BusinessDayDate"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BusinessYear" source="BusinessYear"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionIndex" source="TransactionIndex"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionNumber" source="TransactionNumber"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OrderChannel" source="OrderChannel"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Article" source="Article"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="HierarchyNode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SalesAmount" source="SalesAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TransactionAmount" source="TransactionAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmountRated" source="TenderAmountRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecode" source="TenderTypecode"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderAmount" source="TenderAmount"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Fee" source="Fee"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FeeRated" source="FeeRated"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="StoreID" source="StoreID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Installments" source="Installments"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileTypeOriginal" source="ProfileTypeOriginal"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ProfileType" source="ProfileType"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypeName" source="TenderTypeName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggr" source="TenderTypecodeAggr"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TenderTypecodeAggrName" source="TenderTypecodeAggrName"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HierarchyID"/>
+      </input>
+      <input node="#HierarchyText">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIerarchyText" source="LTEXTG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyID" source="HIER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HierarchyNode" source="NODE"/>
+      </input>
+      <joinAttribute name="HierarchyID"/>
+      <joinAttribute name="HierarchyNode"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="SalesFeeRatedHierText">
+    <descriptions/>
+    <attributes>
+      <attribute id="SAPClient" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPClient"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="SAPClient"/>
+      </attribute>
+      <attribute id="BusinessDayDate" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BusinessDayDate"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="BusinessDayDate"/>
+      </attribute>
+      <attribute id="BusinessYear" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BusinessYear"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="BusinessYear"/>
+      </attribute>
+      <attribute id="TransactionIndex" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionIndex"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TransactionIndex"/>
+      </attribute>
+      <attribute id="TransactionNumber" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionNumber"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TransactionNumber"/>
+      </attribute>
+      <attribute id="OrderChannel" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="OrderChannel"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="OrderChannel"/>
+      </attribute>
+      <attribute id="Article" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Article"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="Article"/>
+      </attribute>
+      <attribute id="HierarchyNode" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HierarchyNode"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="HierarchyNode"/>
+      </attribute>
+      <attribute id="SalesAmount" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SalesAmount"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="SalesAmount"/>
+      </attribute>
+      <attribute id="TransactionAmount" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TransactionAmount"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TransactionAmount"/>
+      </attribute>
+      <attribute id="TenderTypecode" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderTypecode"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TenderTypecode"/>
+      </attribute>
+      <attribute id="TenderAmount" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderAmount"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TenderAmount"/>
+      </attribute>
+      <attribute id="Fee" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Fee"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="Fee"/>
+      </attribute>
+      <attribute id="StoreID" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="StoreID"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="StoreID"/>
+      </attribute>
+      <attribute id="Installments" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Installments"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="Installments"/>
+      </attribute>
+      <attribute id="ProfileType" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ProfileType"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="ProfileType"/>
+      </attribute>
+      <attribute id="TenderTypeName" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderTypeName"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TenderTypeName"/>
+      </attribute>
+      <attribute id="TenderTypecodeAggr" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderTypecodeAggr"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TenderTypecodeAggr"/>
+      </attribute>
+      <attribute id="TenderTypecodeAggrName" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TenderTypecodeAggrName"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="TenderTypecodeAggrName"/>
+      </attribute>
+      <attribute id="HIerarchyText" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HierarchyText"/>
+        <keyMapping columnObjectName="SalesFeeRatedHierText" columnName="HIerarchyText"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="Date" hidden="false" order="1" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;BusinessDayDate&quot;</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="Date_to_Month" hidden="true" order="2" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date_to_Month"/>
+        <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
+          <formula>month(&quot;Date&quot;)&#xD;
+</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="Month" hidden="false" order="3" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Month"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="20">
+          <formula>case(&quot;Date_to_Month&quot;,1,'Janeiro',2,'Fevereiro',3,'Março',4,'Abril',5,'Maio',6,'Junho',7,'Julho',8,'Agosto',9,'Setembro',10,'Outubro',11,'Novembro',12,'Dezembro','')</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="InstallmentsN" hidden="false" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Installments as number"/>
+        <keyCalculation datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;Installments&quot;</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="HierarchyNodeNull" hidden="false" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HierarchyNodeNull"/>
+        <keyCalculation datatype="VARCHAR" expressionLanguage="COLUMN_ENGINE" length="2">
+          <formula>if(isnull(&quot;HierarchyNode&quot;) or &quot;HierarchyNode&quot; = '' ,  'ZZ' , &quot;HierarchyNode&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="TenderAmountRated" order="16" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TenderAmountRated"/>
+        <measureMapping columnObjectName="SalesFeeRatedHierText" columnName="TenderAmountRated"/>
+      </measure>
+      <measure id="FeeRated" order="20" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="FeeRated"/>
+        <measureMapping columnObjectName="SalesFeeRatedHierText" columnName="FeeRated"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="632" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSSalesArticle" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="1029"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Hierarchy" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="1029"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSArticleHierarchy" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="933"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSTotalTransaction" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="933"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSTender" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="484" y="837"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSInstallments" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="638" y="837"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSTenderInstallments" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="484" y="741"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSFreight" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="933"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="POSFreigthAggr" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="837"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesHier" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="837"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesHierFreight" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="741"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesHierTender" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="404" y="645"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FeeTable" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="558" y="645"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesFee" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="479" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="StoreIDxProfile" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="633" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesFeeProfile" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="555" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TenderNames" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="709" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesFeeWNames" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="622" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesFeeRatedWNames" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="709" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="HierarchyText" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="555" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SalesFeeRatedHierText" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="632" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

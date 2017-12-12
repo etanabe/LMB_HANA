@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CV_LMB_CONTCUSTO" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="SCRIPT_BASED" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" scriptParametersCaseSensitive="true">
+  <origin/>
+  <descriptions defaultDescription="CV_LMB_CONTCUSTO"/>
+  <localVariables>
+    <variable id="pAnoMes" parameter="true">
+      <descriptions defaultDescription="pAnoMes"/>
+      <variableProperties datatype="VARCHAR" length="6" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="pCENTRO" parameter="true">
+      <descriptions defaultDescription="pCENTRO"/>
+      <variableProperties datatype="VARCHAR" length="4" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources/>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:SqlScriptView" id="Script_View">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute datatype="VARCHAR" id="LOJA" length="10"/>
+        <viewAttribute datatype="VARCHAR" id="SECAO" length="9"/>
+        <viewAttribute datatype="DECIMAL" id="VR_CUSTO" length="15" scale="2"/>
+        <viewAttribute datatype="VARCHAR" id="ANO_MES" length="6"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <localVariable>#pAnoMes</localVariable>
+      <localVariable>#pCENTRO</localVariable>
+      <definition> 
+ /********* Begin Procedure Script ************/ 
+ BEGIN 
+ 	  CALL &quot;_SYS_BIC&quot;.&quot;lmb.fin::LMB_CONT_CUSTOFIN&quot; (:pAnoMes, :pCENTRO, var_out); 
+
+END /********* End Procedure Script ************/
+</definition>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Script_View">
+    <descriptions/>
+    <attributes>
+      <attribute id="LOJA" order="1">
+        <descriptions defaultDescription="LOJA"/>
+        <keyMapping columnObjectName="Script_View" columnName="LOJA"/>
+      </attribute>
+      <attribute id="SECAO" order="2">
+        <descriptions defaultDescription="SECAO"/>
+        <keyMapping columnObjectName="Script_View" columnName="SECAO"/>
+      </attribute>
+      <attribute id="ANO_MES" order="4">
+        <descriptions defaultDescription="ANO_MES"/>
+        <keyMapping columnObjectName="Script_View" columnName="ANO_MES"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="VR_CUSTO" order="3" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="VR_CUSTO"/>
+        <measureMapping columnObjectName="Script_View" columnName="VR_CUSTO"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

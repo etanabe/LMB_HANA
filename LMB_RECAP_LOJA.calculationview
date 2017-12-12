@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" schemaVersion="2.3" id="LMB_RECAP_LOJA" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="LMB_RECAP"/>
+  <metadata changedAt="2017-12-12 17:53:33.742"/>
+  <localVariables>
+    <variable id="VAR_BUSINESSDAYDATE">
+      <descriptions/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="VAR_BUSINESSDAYDATE_1">
+      <descriptions/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="AttributeValue">
+          <attribute name="BUSINESSDAYDATE"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="VAR_RETAILSTOREID">
+      <descriptions/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="AttributeValue">
+          <attribute name="RETAILSTOREID"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="VAR_PLANT">
+      <descriptions/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="AttributeValue">
+          <attribute name="PLANT"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_Store" parameter="true">
+      <descriptions defaultDescription="Loja"/>
+      <variableProperties datatype="NVARCHAR" length="4" mandatory="false" scale="0">
+        <valueDomain type="AttributeValue">
+          <attribute name="PLANT"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+        <defaultRange/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="38"/>
+  <dataSources>
+    <DataSource id="_POSDW_TLOGF_EXT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_CAR" columnObjectName="/POSDW/TLOGF_EXT" alias="_POSDW_TLOGF_EXT"/>
+    </DataSource>
+    <DataSource id="_POSDW_TLOGF" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_CAR" columnObjectName="/POSDW/TLOGF" alias="_POSDW_TLOGF"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="FIELDNAME">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="CDADMCART"/>
+            <operands value=""/>
+            <operands value="LOJAORIGN"/>
+          </filter>
+        </viewAttribute>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="PARENTKEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF_EXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDNAME" source="FIELDNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTKEY" source="PARENTKEY"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="TURNOVER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DATASTATUS">
+          <filter xsi:type="AccessControl:ListValueFilter" operator="IN" including="true">
+            <operands value="2"/>
+            <operands value="3"/>
+          </filter>
+        </viewAttribute>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="SALESAMOUNT"/>
+        <viewAttribute id="RETAILTYPECODE"/>
+        <viewAttribute id="TAXTYPECODE"/>
+        <viewAttribute id="TAXAMOUNT"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="DATASTATUS_1"/>
+        <viewAttribute id="TENDERNUMBER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#_POSDW_TLOGF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TURNOVER" source="TURNOVER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SALESAMOUNT" source="SALESAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILTYPECODE" source="RETAILTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TAXTYPECODE" source="TAXTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TAXAMOUNT" source="TAXAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS_1" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERNUMBER" source="TENDERNUMBER"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BUSINESSDAYDATE"/>
+        <viewAttribute id="RECORDQUALIFIER"/>
+        <viewAttribute id="RETAILSTOREID"/>
+        <viewAttribute id="ROWKEY"/>
+        <viewAttribute id="TENDERAMOUNT"/>
+        <viewAttribute id="TENDERTYPECODE"/>
+        <viewAttribute id="TRANSINDEX"/>
+        <viewAttribute id="TRANSNUMBER"/>
+        <viewAttribute id="TRANSTYPECODE"/>
+        <viewAttribute id="TURNOVER"/>
+        <viewAttribute id="WORKSTATIONID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DATASTATUS"/>
+        <viewAttribute id="PLANT"/>
+        <viewAttribute id="SALESAMOUNT"/>
+        <viewAttribute id="RETAILTYPECODE"/>
+        <viewAttribute id="TAXTYPECODE"/>
+        <viewAttribute id="TAXAMOUNT"/>
+        <viewAttribute id="MEDIAISSUERID"/>
+        <viewAttribute id="PAYMENTCARD"/>
+        <viewAttribute id="FIELDVALUE"/>
+        <viewAttribute id="TENDERNUMBER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RECORDQUALIFIER" source="RECORDQUALIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="ROWKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERAMOUNT" source="TENDERAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERTYPECODE" source="TENDERTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSTYPECODE" source="TRANSTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TURNOVER" source="TURNOVER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WORKSTATIONID" source="WORKSTATIONID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATASTATUS" source="DATASTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SALESAMOUNT" source="SALESAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILTYPECODE" source="RETAILTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TAXTYPECODE" source="TAXTYPECODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TAXAMOUNT" source="TAXAMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEDIAISSUERID" source="MEDIAISSUERID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAYMENTCARD" source="PAYMENTCARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TENDERNUMBER" source="TENDERNUMBER"/>
+      </input>
+      <input node="#Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="FIELDVALUE" source="FIELDVALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BUSINESSDAYDATE" source="BUSINESSDAYDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSNUMBER" source="TRANSNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSINDEX" source="TRANSINDEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RETAILSTOREID" source="RETAILSTOREID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROWKEY" source="PARENTKEY"/>
+      </input>
+      <joinAttribute name="BUSINESSDAYDATE"/>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="TRANSNUMBER"/>
+      <joinAttribute name="TRANSINDEX"/>
+      <joinAttribute name="RETAILSTOREID"/>
+      <joinAttribute name="ROWKEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_3">
+    <descriptions/>
+    <attributes>
+      <attribute id="BUSINESSDAYDATE" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="BUSINESSDAYDATE"/>
+      </attribute>
+      <attribute id="RECORDQUALIFIER" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="RECORDQUALIFIER"/>
+      </attribute>
+      <attribute id="RETAILSTOREID" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="RETAILSTOREID"/>
+      </attribute>
+      <attribute id="TENDERTYPECODE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="TENDERTYPECODE"/>
+      </attribute>
+      <attribute id="TRANSINDEX" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="TRANSINDEX"/>
+      </attribute>
+      <attribute id="TRANSNUMBER" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="TRANSNUMBER"/>
+      </attribute>
+      <attribute id="TRANSTYPECODE" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="TRANSTYPECODE"/>
+      </attribute>
+      <attribute id="WORKSTATIONID" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="WORKSTATIONID"/>
+      </attribute>
+      <attribute id="MANDT" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DATASTATUS" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="DATASTATUS"/>
+      </attribute>
+      <attribute id="PLANT" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="PLANT"/>
+      </attribute>
+      <attribute id="RETAILTYPECODE" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="RETAILTYPECODE"/>
+      </attribute>
+      <attribute id="TAXTYPECODE" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="TAXTYPECODE"/>
+      </attribute>
+      <attribute id="MEDIAISSUERID" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="MEDIAISSUERID"/>
+      </attribute>
+      <attribute id="PAYMENTCARD" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="PAYMENTCARD"/>
+      </attribute>
+      <attribute id="FIELDVALUE" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="FIELDVALUE"/>
+      </attribute>
+      <attribute id="ROWKEY" order="58" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="ROWKEY"/>
+      </attribute>
+      <attribute id="TENDERNUMBER" order="61" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_3" columnName="TENDERNUMBER"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="TENDERAMOUNT" order="4" aggregationType="sum" measureType="simple">
+        <descriptions/>
+        <measureMapping columnObjectName="Join_3" columnName="TENDERAMOUNT"/>
+      </measure>
+      <measure id="TURNOVER" order="9" aggregationType="sum" measureType="simple">
+        <descriptions/>
+        <measureMapping columnObjectName="Join_3" columnName="TURNOVER"/>
+      </measure>
+      <measure id="SALESAMOUNT" order="44" aggregationType="sum" measureType="simple">
+        <descriptions/>
+        <measureMapping columnObjectName="Join_3" columnName="SALESAMOUNT"/>
+      </measure>
+      <measure id="TAXAMOUNT" order="47" aggregationType="sum" measureType="simple">
+        <descriptions/>
+        <measureMapping columnObjectName="Join_3" columnName="TAXAMOUNT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures>
+      <measure id="1_Dinheiro" hidden="false" order="37" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;1_1_Dinheiro&quot;</formula>
+      </measure>
+      <measure id="4_Cartoes_Debito" hidden="false" order="38" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;4_1_Cielo_Debito&quot;+&quot;4_2_Rede_Debito&quot;+&quot;4_3_Banrisul_Debito&quot;+&quot;4_4_Construcard&quot;</formula>
+      </measure>
+      <measure id="5_Financeira" hidden="false" order="39" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;5_1_CDC_Losango&quot;</formula>
+      </measure>
+      <measure id="6_Vale_Credito" hidden="false" order="40" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;6_1_Vales_Emitidos_Devolucao&quot;+&quot;6_2_Vales_Emitidos_Canc_Pedido&quot;+&quot;6_3_Vales_Baixados_Caixa&quot;+&quot;6_4_Vales_Baixados_Reembolso&quot;</formula>
+      </measure>
+      <measure id="13_Adto_Clientes" hidden="false" order="48" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;13_1_Adto_Clientes&quot;+&quot;13_2_Adto_Clientes&quot;</formula>
+      </measure>
+      <measure id="15_Vendas_Gift_Card" hidden="false" order="55" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;15_1_Vendas_Gift_Card_Carga&quot;+&quot;15_2_Vendas_Gift_Card_Canc&quot;</formula>
+      </measure>
+      <measure id="6_3_Vales_Baixados_Caixa" hidden="false" order="56" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;6_3_1_Vales_Baixados_Caixa_POS&quot;-&quot;6_3_2_Vales_Baixados_Caixa_NEG&quot;</formula>
+      </measure>
+      <measure id="6_1_Vales_Emitidos_Devolucao" hidden="false" order="57" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;6_1_1_Vales_Emitidos_Devolucao&quot;*-1</formula>
+      </measure>
+      <measure id="3_4_Celebre" hidden="false" order="59" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;3_4_1_Celebre&quot;+&quot;3_4_2_Celebre&quot;</formula>
+      </measure>
+      <measure id="14_Adto_GE" hidden="false" order="60" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;14_1_Adto_GE_Venda&quot;-&quot;14_2_Adto_GE_Canc&quot;</formula>
+      </measure>
+      <measure id="12_Devolucoes_Totais_Venda" hidden="false" order="63" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;12_1_Devolucoes_Na_Mesma_Loja&quot;+&quot;12_2_Devolucoes_Em_Outras_Lojas&quot;+&quot;12_3_Anulacoes_Na_Mesma_Loja&quot;</formula>
+      </measure>
+      <measure id="12_1_Devolucoes_Na_Mesma_Loja" hidden="false" order="64" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>if('$$IP_Store$$'=&quot;FIELDVALUE&quot; and &#xD;
+'$$IP_Store$$'=LPAD(LTRIM(&quot;RETAILSTOREID&quot;,'0'),4,'0'),&quot;12_Devolucoes_Vendas&quot;,0)</formula>
+      </measure>
+      <measure id="12_2_Devolucoes_Em_Outras_Lojas" hidden="false" order="65" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>if('$$IP_Store$$'=&quot;FIELDVALUE&quot; and &#xD;
+'$$IP_Store$$'!=LPAD(LTRIM(&quot;RETAILSTOREID&quot;,'0'),4,'0'),&quot;12_Devolucoes_Vendas&quot;,0)</formula>
+      </measure>
+      <measure id="12_3_Anulacoes_Na_Mesma_Loja" hidden="false" order="66" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>if('$$IP_Store$$'=&quot;FIELDVALUE&quot; and &#xD;
+'$$IP_Store$$'=LPAD(LTRIM(&quot;RETAILSTOREID&quot;,'0'),4,'0'),&quot;Anulacoes&quot;,0)</formula>
+      </measure>
+      <measure id="12_4_Devolucoes_De_Outras_Lojas" hidden="false" order="67" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+        <descriptions/>
+        <formula>&quot;12_4_1_Devolucoes_Vendas&quot;-&quot;12_1_Devolucoes_Na_Mesma_Loja&quot;</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures>
+      <measure id="1_1_Dinheiro" hidden="false" order="11" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCS"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="2_Cheque" hidden="false" order="12" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PCH1"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCH"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PCH2"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="Cielo_Credito" hidden="false" order="13" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCC"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="Rede_Credito" hidden="false" order="14" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCC"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="3_3_American_Express" hidden="false" order="15" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCC"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="3_4_1_Celebre" hidden="false" order="16" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL10"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="3_4_2_Celebre" hidden="false" order="17" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="4"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="3_5_Banrisul_Credito" hidden="false" order="18" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCC"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="3"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="3_6_SENFF" hidden="false" order="19" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPCR"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCC"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="6"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="4_1_Cielo_Debito" hidden="false" order="20" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPDB"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCD"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="4_2_Rede_Debito" hidden="false" order="21" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPDB"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCD"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="4_3_Banrisul_Debito" hidden="false" order="22" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPDB"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCD"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="3"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="4_4_Construcard" hidden="false" order="23" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTCD"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PPDB"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="FIELDVALUE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="7"/>
+          </filter>
+          <attributeName>FIELDVALUE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="5_1_CDC_Losango" hidden="false" order="24" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTFI"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="6_1_1_Vales_Emitidos_Devolucao" hidden="false" order="25" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1093"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL30"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="6_2_Vales_Emitidos_Canc_Pedido" hidden="false" order="26" baseMeasure="#TURNOVER">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="500"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="6_3_1_Vales_Baixados_Caixa_POS" hidden="false" order="27" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL30"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="6_3_2_Vales_Baixados_Caixa_NEG" hidden="false" order="28" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1809"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1093"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1098"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1801"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1802"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1803"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1804"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1805"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1806"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1807"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1808"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1099"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL30"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="6_4_Vales_Baixados_Reembolso" hidden="false" order="29" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTV2"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1008"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="7_Voucher" hidden="false" order="30" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL14"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL01"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1001"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1009"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1010"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1002"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1017"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1018"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1030"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="9_Retomada_Adto_GE" hidden="false" order="31" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PTGE"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="11_1_1_Vendas_Loja" hidden="false" order="32" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RETAILTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2001"/>
+          </filter>
+          <attributeName>RETAILTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="12_Devolucoes_Vendas" hidden="false" order="33" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1005"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1017"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1019"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1100"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1101"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+      </measure>
+      <measure id="13_1_Adto_Clientes" hidden="false" order="34" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RETAILTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2009"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2007"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2018"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2102"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2030"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2036"/>
+          </filter>
+          <attributeName>RETAILTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="13_2_Adto_Clientes" hidden="false" order="35" baseMeasure="#TAXAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="8"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TAXTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="ZFRE"/>
+          </filter>
+          <attributeName>TAXTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1007"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1001"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1018"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1102"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1030"/>
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1036"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="14_1_Adto_GE_Venda" hidden="false" order="36" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2040"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="14_2_Adto_GE_Canc" hidden="false" order="52" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2041"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="15_1_Vendas_Gift_Card_Carga" hidden="false" order="53" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL02"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1091"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="15_2_Vendas_Gift_Card_Canc" hidden="false" order="54" baseMeasure="#TENDERAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="21"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TENDERTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="PL01"/>
+          </filter>
+          <attributeName>TENDERTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1090"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="Anulacoes" hidden="false" order="62" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RECORDQUALIFIER">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="5"/>
+          </filter>
+          <attributeName>RECORDQUALIFIER</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="TRANSTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="1002"/>
+          </filter>
+          <attributeName>TRANSTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+      <measure id="12_4_1_Devolucoes_Vendas" hidden="false" order="68" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restrictionExpression>(&quot;RECORDQUALIFIER&quot; = '5') AND (&quot;TRANSTYPECODE&quot; = '1005' OR &quot;TRANSTYPECODE&quot; = '1017' OR &quot;TRANSTYPECODE&quot; = '1019' OR &quot;TRANSTYPECODE&quot; = '1100' OR &quot;TRANSTYPECODE&quot; = '1101') AND (LPAD(LTRIM(&quot;RETAILSTOREID&quot;,'0'),4,'0') = '$$IP_Store$$')</restrictionExpression>
+      </measure>
+      <measure id="11_2_1_1_Servicos_Loja" hidden="false" order="69" baseMeasure="#SALESAMOUNT">
+        <descriptions/>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="RETAILTYPECODE">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="2901"/>
+          </filter>
+          <attributeName>RETAILTYPECODE</attributeName>
+        </restriction>
+        <restriction logicalOperator="AND">
+          <filter xsi:type="Privilege:AttributeFilter" attributeName="PLANT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$IP_Store$$"/>
+          </filter>
+          <attributeName>PLANT</attributeName>
+        </restriction>
+      </measure>
+    </restrictedMeasures>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="20"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="120" y="240"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-30" y="240"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="120"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>
